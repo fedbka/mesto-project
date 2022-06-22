@@ -1,14 +1,30 @@
 .header {
   margin: 0 auto;
-  padding: 45px 0 0;
+  padding: 0;
+  padding-top: 45px;
   max-width: 880px;
+  min-height: 73px;
   width: 100%;
   overflow: hidden;
   border-bottom: 1px solid #545454;
+  display: flex;
+}
+
+@media screen and (max-width: 1279px) {
+  .header {
+    min-height: calc(56px + ((100vw - 320px) * (73 - 56) / (1279 - 320)));
+  }
 }
 
 @media screen and (max-width: 918px) {
   .header {
-    padding: calc(28px + ((100vw - 320px) * (45 - 28) / (918 - 320))) 0 0;
+    padding-top: calc(28px + ((100vw - 320px) * (45 - 28) / (918 - 320)));
+    padding-left: calc(10px - ((100vw - 881px) * (10) / (918 - 881)));
+  }
+}
+
+@media screen and (max-width: 880px) {
+  .header {
+    padding-left: 19px;
   }
 }

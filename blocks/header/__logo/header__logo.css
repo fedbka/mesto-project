@@ -4,12 +4,6 @@
   max-width: 142px;
 }
 
-@media screen and (max-width: 918px) {
-  .header__logo {
-    padding-left: calc(27px - ((100vw - 320px) * (27) / (918 - 320)));
-  }
-}
-
 @media screen and (max-width: 880px) {
   .header__logo {
     max-width: calc(104px + ((100vw - 320px) * (142 - 104) / (880 - 320)));
