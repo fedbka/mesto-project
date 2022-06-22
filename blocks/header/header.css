@@ -1,0 +1,14 @@
+.header {
+  margin: 0 auto;
+  padding: 45px 0 0;
+  max-width: 880px;
+  width: 100%;
+  overflow: hidden;
+  border-bottom: 1px solid #545454;
+}
+
+@media screen and (max-width: 918px) {
+  .header {
+    padding: calc(28px + ((100vw - 320px) * (45 - 28) / (918 - 320))) 0 0;
+  }
+}
