@@ -1,0 +1,14 @@
+.profile {
+  margin: 0 auto;
+  padding: 0;
+  max-width: 880px;
+  width: 100%;
+  padding-top: 40px;
+  display: flex;
+}
+
+@media screen and (max-width: 918px) {
+  .footer {
+    padding-top: calc(42px + ((100vw - 320px) * (42 - 40) / (918 - 320)));
+  }
+}
