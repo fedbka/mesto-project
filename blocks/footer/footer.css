@@ -7,10 +7,10 @@
   width: 100%;
 }
 
-@media screen and (max-width: 918px) {
+@media screen and (max-width: 917px) {
   .footer {
-    padding-bottom: calc(36px + ((100vw - 320px) * (60 - 36) / (918 - 320)));
-    padding-top: calc(48px + ((100vw - 320px) * (66 - 48) / (918 - 320)));
+    padding-bottom: calc(36px + ((100vw - 320px) * (60 - 36) / (917 - 320)));
+    padding-top: calc(48px + ((100vw - 320px) * (66 - 48) / (917 - 320)));
     width: calc(100vw - 38px);
   }
 }

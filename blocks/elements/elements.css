@@ -1,14 +1,22 @@
 .elements {
   display: grid;
-  gap: 20px 17px;
+  gap: 20.625px 17px;
   grid-template-columns: repeat(3, 1fr);
   margin: 0 auto;
   max-width: 880px;
   padding: 51px 0 0;
+  justify-content: center;
 }
 
-@media screen and (max-width: 938px) {
-  .footer {
+@media screen and (max-width: 917px) {
+  .elements {
+    grid-template-columns: repeat(2, minmax(min-content, max-content));
     width: calc(100vw - 38px);
+  }
+}
+
+@media screen and (max-width: 617px) {
+  .elements {
+    grid-template-columns: minmax(min-content, max-content);
   }
 }

@@ -5,9 +5,7 @@
   max-width: 880px;
   min-height: 73px;
   width: 100%;
-  overflow: hidden;
   border-bottom: 1px solid #545454;
-  display: flex;
 }
 
 @media screen and (max-width: 1279px) {
@@ -16,15 +14,8 @@
   }
 }
 
-@media screen and (max-width: 918px) {
+@media screen and (max-width: 917px) {
   .header {
-    padding-top: calc(28px + ((100vw - 320px) * (45 - 28) / (918 - 320)));
-    padding-left: calc(10px - ((100vw - 881px) * (10) / (918 - 881)));
-  }
-}
-
-@media screen and (max-width: 880px) {
-  .header {
-    padding-left: 19px;
+    padding-top: calc(28px + ((100vw - 320px) * (45 - 28) / (917 - 320)));
   }
 }

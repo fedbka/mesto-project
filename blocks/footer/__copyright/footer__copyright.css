@@ -7,3 +7,10 @@
   line-height: 22px;
   color: #545454;
 }
+
+@media screen and (max-width: 917px) {
+  .footer__copyright {
+    font-size: calc(14px + ((100vw - 320px) * (18 - 14) / (917 - 320)));
+    line-height: calc(17px + ((100vw - 320px) * (22 - 17) / (917 - 320)));
+  }
+}
