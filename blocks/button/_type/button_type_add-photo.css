@@ -2,7 +2,18 @@
   margin: 0;
   padding: 0;
   border: 2px solid white;
-  background-image: url("../../../images/button__type_add-photo.png");
+  background-image: url("../../../images/button_type_add-photo.svg");
+  background-size: 22px 22px;
+  border-radius: 2px;
   width: 150px;
   height: 50px;
 }
+
+@media screen and (max-width: 617px) {
+  .button_type_add-photo {
+    max-width: 282px;
+    width: 100%;
+    background-size: calc(16px + ((100vw - 320px) * (22 - 16) / (6127 - 320))) calc(16px + ((100vw - 320px) * (22 - 16) / (6127 - 320)));
+  }
+}
+

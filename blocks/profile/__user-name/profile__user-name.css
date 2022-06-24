@@ -10,6 +10,7 @@
 @media screen and (max-width: 617px) {
   .profile__user-name {
     font-size: calc(27px + ((100vw - 320px) * (42 - 27) / (617 - 320)));
-    line-height: 48px;
+    line-height: calc(32px + ((100vw - 320px) * (48 - 32) / (617 - 320)));
+    text-align: center;
   }
 }

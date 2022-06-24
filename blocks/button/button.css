@@ -8,3 +8,8 @@
   transition: opacity 0.1s linear;
   box-sizing: border-box;
 }
+
+.button:hover {
+  cursor: pointer;
+  opacity: .6;
+}

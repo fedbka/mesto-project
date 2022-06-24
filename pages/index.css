@@ -16,9 +16,11 @@
 @import url("../blocks/profile/__avatar/profile__avatar.css");
 @import url("../blocks/profile/__info/profile__info.css/__avatar/profile__avatar.css");
 @import url("../blocks/profile/__user-name/profile__user-name.css");
+@import url("../blocks/profile/__user-description/profile__user-description.css");
 @import url("../blocks/button/button.css");
 @import url("../blocks/button/_type/button_type_like.css");
 @import url("../blocks/button/_type/button_type_add-photo.css");
+@import url("../blocks/button/_type/button_type_edit-profile.css");
 
 /* * {
   outline: auto;
