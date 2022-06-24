@@ -5,14 +5,12 @@
   width: 100%;
   padding-top: 40px;
   display: grid;
-  grid-template-columns: 120px max-content 150px;
-  align-items: center;
-  justify-content: space-between;
-}
+  grid-template-columns: 1fr 3.9fr 1fr;
+ }
 
 @media screen and (max-width: 917px) {
   .profile {
-    padding-top: calc(42px + ((100vw - 320px) * (42 - 40) / (917 - 320)));
+    padding-top: calc(41px + ((100vw - 320px) * (41 - 40) / (917 - 320)));
     width: calc(100vw - 38px);
   }
 }

@@ -1,12 +1,19 @@
 .profile__info {
     margin: 0;
-    padding: 0;
+    padding: 12px 0 0;
     max-width: 336px;
     width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(min-content,max-content));
+    grid-template-rows: repeat(2, min-content);
+    column-gap: 18px;
+    row-gap: 16px;  
 }
 
 @media screen and (max-width: 617px) {
     .profile__info {
       max-width: 282px;
+      padding-top: 22.25px;
+      padding-bottom: 36px;
     }
   }
