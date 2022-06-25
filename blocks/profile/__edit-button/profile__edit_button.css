@@ -1,0 +1,19 @@
+.profile__edit-button {
+  margin: 0;
+  padding: 0;
+  border: 1px solid white;
+  background-image: url("../../../images/button_type_edit-profile.svg");
+  background-size: 10px 10px;
+  width: 24px;
+  height: 24px;
+  align-self: center;
+}
+
+@media screen and (max-width: 617px) {
+  .profile__edit-button {
+    width: calc(18px + ((100vw - 320px) * (24 - 18) / (617 - 320)));
+    height: calc(18px + ((100vw - 320px) * (24 - 18) / (617 - 320)));
+    background-size: calc(7.5px + ((100vw - 320px) * (10 - 7.5) / (617 -320)))
+      calc(7.5px + ((100vw - 320px) * (10 - 7.5) / (617 -320)));
+  }
+}

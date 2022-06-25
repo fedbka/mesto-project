@@ -19,5 +19,6 @@
   .elements {
     grid-template-columns: minmax(min-content, max-content);
     padding: 36px 0 0;
+    flex-grow: 1;
   }
 }
