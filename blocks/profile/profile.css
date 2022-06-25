@@ -1,16 +1,17 @@
 .profile {
-  margin: 0 auto;
-  padding: 0;
-  max-width: 880px;
-  width: 100%;
-  padding-top: 40px;
+  align-items: center;
   display: grid;
   grid-template-columns: 1fr 3.9fr 1fr;
- }
+  margin: 0 auto;
+  max-width: 880px;
+  padding: 40px 0 0 0;
+  width: 100%;
+  line-height: 0;
+}
 
 @media screen and (max-width: 917px) {
   .profile {
-    padding-top: calc(41px + ((100vw - 320px) * (41 - 40) / (917 - 320)));
+    padding: calc(41px + ((100vw - 320px) * (41 - 40) / (917 - 320))) 0 0 0;
     width: calc(100vw - 38px);
   }
 }
@@ -19,7 +20,7 @@
   .profile {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    grid-template-columns: none;
   }
 }
 

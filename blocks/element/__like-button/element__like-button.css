@@ -1,0 +1,8 @@
+.element__like-button {
+  margin: 0;
+  padding: 0;
+  background-image: url("../../../images/element_like-button.svg");
+  border: none;
+  width: 24px;
+  height: 19px;
+}
