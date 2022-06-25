@@ -6,4 +6,5 @@
   min-width: 320px;
   padding: 0;
   text-rendering: optimizeLegibility;
+  position: relative;
 }

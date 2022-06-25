@@ -14,13 +14,26 @@
 @import url("../blocks/profile/profile.css");
 @import url("../blocks/profile/__info/profile__info.css");
 @import url("../blocks/profile/__avatar/profile__avatar.css");
-@import url("../blocks/profile/__info/profile__info.css/__avatar/profile__avatar.css");
 @import url("../blocks/profile/__user-name/profile__user-name.css");
 @import url("../blocks/profile/__user-description/profile__user-description.css");
 @import url("../blocks/button/button.css");
 @import url("../blocks/button/_type/button_type_like.css");
 @import url("../blocks/button/_type/button_type_add-photo.css");
 @import url("../blocks/button/_type/button_type_edit-profile.css");
+@import url("../blocks/button/_type/button_type_form-submit.css");
+@import url("../blocks/button/_type/button_type_close-form.css");
+@import url("../blocks/popup/popup.css");
+@import url("../blocks/popup/_opened/popup_opened.css");
+@import url("../blocks/popup/__container/popup__container.css");
+@import url("../blocks/profile-edit-form/profile-edit-form.css");
+@import url("../blocks/profile-edit-form/__filedset/profile-edit-form__filedset.css");
+@import url("../blocks/profile-edit-form/__title/profile-edit-form__title.css");
+@import url("../blocks/profile-edit-form/__item/profile-edit-form__item.css");
+@import url("../blocks/profile-edit-form/__item/_type/profile-edit-form__item_type_submit.css");
+@import url("../blocks/profile-edit-form/__item/_type/profile-edit-form__item_type_user-description.css");
+@import url("../blocks/profile-edit-form/__item/_type/profile-edit-form__item_type_user-name.css");
+
+
 
 /* * {
   outline: auto;
