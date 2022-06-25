@@ -1,0 +1,18 @@
+.profile__user-name {
+  margin: 0;
+  font-size: 42px;
+  line-height: 48px;
+  font-style: normal;
+  font-weight: 500;
+  text-align: left;
+  box-sizing: content-box;
+  vertical-align: bottom;
+}
+
+@media screen and (max-width: 617px) {
+  .profile__user-name {
+    font-size: calc(27px + ((100vw - 320px) * (38 - 27) / (617 - 320)));
+    line-height: calc(32px + ((100vw - 320px) * (48 - 32) / (617 - 320)));
+    text-align: center;
+  }
+}
