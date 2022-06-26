@@ -2,10 +2,6 @@
 @import url("../vendor/fonts/fonts.css");
 @import url("../blocks/page/page.css");
 @import url("../blocks/button/button.css");
-@import url("../blocks/button/_type/button_type_like.css");
-@import url("../blocks/button/_type/button_type_add-photo.css");
-@import url("../blocks/button/_type/button_type_form-submit.css");
-@import url("../blocks/button/_type/button_type_close-form.css");
 @import url("../blocks/content/content.css");
 @import url("../blocks/header/header.css");
 @import url("../blocks/header/__logo/header__logo.css");
@@ -28,12 +24,12 @@
 @import url("../blocks/popup/popup.css");
 @import url("../blocks/popup/_opened/popup_opened.css");
 @import url("../blocks/popup/__container/popup__container.css");
+@import url("../blocks/popup/__close-button/popup__close-button.css");
 @import url("../blocks/form/form.css");
 @import url("../blocks/form/__filedset/form__filedset.css");
 @import url("../blocks/form/__title/form__title.css");
 @import url("../blocks/form/__item/form__item.css");
 @import url("../blocks/form/__submit-button/form__submit-button.css");
-@import url("../blocks/form/__close-button/form__close-button.css");
 
 /* * {
   outline: auto;
