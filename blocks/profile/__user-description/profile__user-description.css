@@ -5,6 +5,10 @@
   line-height: 22px;
   font-style: normal;
   font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 330px;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 617px) {
@@ -12,5 +16,17 @@
     font-size: calc(14px + ((100vw - 320px) * (18 - 14) / (617 - 320)));
     line-height: calc(19px + ((100vw - 320px) * (22 - 19) / (617 - 320)));
     text-align: center;
+  }
+}
+
+@media screen and (max-width: 717px) {
+  .profile__user-description {
+    max-width: calc(330px - (100px - (100vw - 617px) * 100 / (717 - 617)));
+  }
+}
+
+@media screen and (max-width: 617px) {
+  .profile__user-description {
+    max-width: 225px;
   }
 }
