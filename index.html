@@ -19,14 +19,13 @@
         <section class="profile" aria-label="Профиль пользователя">
             <img src="./images/profile__avatar.jpg" alt="Аватар пользователя" class="profile__avatar" />
             <div class="profile__info">
-                <h1 class="profile__user-name">Жак-Ив Кусто l;k;lk;lk ;lk ;l k ;lk ;l k; lk ;lk;lk;lk;lk;lk ;lk
-                    ;lk;lk;lk;lk;lk;k;lk ;lk;lk;lk;l</h1>
+                <h1 class="profile__user-name">Жак-Ив Кусто</h1>
                 <button class="button profile__edit-button" type="button" aria-label="Изменить профиль"></button>
                 <p class="profile__user-description">Исследователь океана</p>
             </div>
             <button class="button profile__add-photo-button" type="button" aria-label="Добавить фото"></button>
         </section>
-        <section class="elements">
+        <section class="elements" aria-label="Фотографии пользователя">
             <article class="element">
                 <img src="./images/karachaevsk.jpg" alt="Старая крепость в Карачаевске" class="element__image" />
                 <div class="element__caption">
@@ -38,7 +37,7 @@
                 <img src="./images/elbrus.jpg" alt="Вершины Эльбруса вдали" class="element__image" />
                 <div class="element__caption">
                     <h2 class="element__title">Гора Эльбрус</h2>
-                    <button class="button element__like-button type=" button" aria-label="Добавить лайк"></button>
+                    <button class="button element__like-button" type="button" aria-label="Добавить лайк"></button>
                 </div>
             </article>
             <article class="element">
@@ -58,19 +57,19 @@
             <article class="element">
                 <img src="./images/dombai.jpg" alt="Вершина Домбая" class="element__image" />
                 <div class="element__caption">
-                    <h2 class="element__title">Домбай l;lk;lk;lk;lkkkkkdkdkdkdkdkdkdkd ;lk;lk; ;k l</h2>
+                    <h2 class="element__title">Домбай</h2>
                     <button class="button element__like-button" type="button" aria-label="Добавить лайк"></button>
                 </div>
             </article>
             <article class="element">
                 <img src="./images/karachaevsk.jpg" alt="Старая крепость в Карачаевске" class="element__image" />
                 <div class="element__caption">
-                    <h2 class="element__title">Карачаево-Черкас .;,;l, ;l, ;l, ;l,;l ,</h2>
+                    <h2 class="element__title">Карачаево-Черкас</h2>
                     <button class="button element__like-button" type="button" aria-label="Добавить лайк"></button>
                 </div>
             </article>
         </section>
-        <div class="popup" aria-label="Форма редактирования профиля">
+        <div class="popup">
             <div class="popup__container">
                 <form class="form" action="submit" name="userProfile">
                     <h2 class="form__title">Редактировать профиль</h2>
@@ -80,7 +79,7 @@
                     </fieldset>
                     <input class="button form__submit-button" type="submit" value="Сохранить" />
                 </form>
-                <button class="button form__close-button" type="button" aria-label="Закрыть форму"></button>
+                <button class="button popup__close-button" type="button" aria-label="Закрыть форму"></button>
             </div>
         </div>
     </main>
