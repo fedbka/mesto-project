@@ -8,4 +8,5 @@
   color: black;
   overflow: hidden;
   line-height: 0;
+  position: relative;
 }
