@@ -1,61 +1,45 @@
+// Add to close buttons event listener for closing popups
+
+function closePopup(event) {
+
+    const popup = event.target.closest('.popup');
+    popup && popup.classList.remove('popup_opened');
+}
+
+closeButtons = document.querySelectorAll('.popup__close-button');
+closeButtons.forEach(closebutton => closebutton.addEventListener('click', closePopup));
+
+
 // PROFILE EDIT FORM
 const profileEditButton = document.querySelector('.profile__edit-button');
 const popupProfileEdit = document.querySelector('.popup_profile-edit');
 const profileEditForm = document.querySelector('.form_profile-edit');
 const inputUserName = document.querySelector('.form__item_user-name');
 const inputUserDescription = document.querySelector('.form__item_user-description');
-const popupProfileEditFormCloseButton = document.querySelector('.popup__close-button_profile-edit');
 const profileUserName = document.querySelector('.profile__user-name');
 const profileUserDescription = document.querySelector('.profile__user-description');
 
-function getProfile() {
-
-    return {
-        name: profileUserName.textContent,
-        description: profileUserDescription.textContent,
-    }
-
-}
-
-function setProfile(userProfile) {
-
-    profileUserName.textContent = userProfile.name;
-    profileUserDescription.textContent = userProfile.description;
-
-}
 
 function openProfileEditForm() {
 
-    let userProfile = getProfile();
-
-    inputUserName.setAttribute('value', userProfile.name);
-    inputUserDescription.value = userProfile.description;
+    inputUserName.value = profileUserName.textContent;
+    inputUserDescription.value = profileUserDescription.textContent;
 
     popupProfileEdit.classList.add('popup_opened');
 
 }
 
-function closeProfileEditForm() {
+function closeProfileEditForm(event) {
+    event.preventDefault();
+
+    profileUserName.textContent = inputUserName.value;
+    profileUserDescription.textContent = inputUserDescription.value;
 
     popupProfileEdit.classList.remove('popup_opened');
-
-}
-
-function saveProfile(evt) {
-    evt.preventDefault();
-
-    let userProfile = {
-        name: inputUserName.value,
-        description: inputUserDescription.value,
-    };
-
-    setProfile(userProfile);
-    closeProfileEditForm();
 }
 
 profileEditButton.addEventListener('click', openProfileEditForm);
-popupProfileEditFormCloseButton.addEventListener('click', closeProfileEditForm);
-profileEditForm.addEventListener('submit', saveProfile);
+profileEditForm.addEventListener('submit', closeProfileEditForm);
 
 
 // ADD ELEMENT FORM
@@ -67,39 +51,25 @@ const inputElementImageURL = document.querySelector('.form__item_element-image-u
 
 const addElementForm = document.querySelector('.form_add-element');
 
-const popupAddElementCloseButton = document.querySelector('.popup__close-button_add-element');
-
 function openAddElementForm() {
 
     popupAddElement.classList.add('popup_opened');
 
 }
 
-function closeAddElementForm() {
+function addElement(event) {
+    event.preventDefault();
+
+    elements.prepend(getElement(inputElementName.value, inputElementImageURL.value))
+
+    inputElementName.value = "";
+    inputElementImageURL.value = "";
 
     popupAddElement.classList.remove('popup_opened');
 
 }
 
-function addElement(evt) {
-    evt.preventDefault();
-
-    element = {
-        name: inputElementName.value,
-        link: inputElementImageURL.value,
-    };
-
-    elementsDB.unshift(element);
-
-    inputElementName.value = "";
-    inputElementImageURL.value = "";
-
-    closeAddElementForm();
-    renderElements();
-}
-
 addElementButton.addEventListener('click', openAddElementForm);
-popupAddElementCloseButton.addEventListener('click', closeAddElementForm);
 addElementForm.addEventListener('submit', addElement);
 
 //  RENDER ELEMENTS
@@ -131,54 +101,74 @@ const elementsDB = [
     }
 ];
 
-function toggleLikeState() {
-    this.classList.toggle('element__like-button_liked');
+function getElement(name, imageURL) {
+
+    const article = document.createElement('article');
+    article.classList.add('element');
+
+    const img = document.createElement('img');
+    img.setAttribute('src', imageURL);
+    img.setAttribute('alt', name);
+    img.classList.add('element__image');
+
+    const div = document.createElement('div');
+    div.classList.add('element__caption');
+
+    const h2 = document.createElement('h2');
+    h2.classList.add('element__title');
+    h2.textContent = name;
+
+    const buttonLike = document.createElement('button');
+    buttonLike.classList.add('button');
+    buttonLike.classList.add('element__like-button');
+    buttonLike.setAttribute('type', 'button');
+    buttonLike.setAttribute('aria-label', 'Добавить лайк');
+
+    const buttonDelete = document.createElement('button');
+    buttonDelete.classList.add('button');
+    buttonDelete.classList.add('element__delete-button');
+    buttonDelete.setAttribute('type', 'button');
+    buttonDelete.setAttribute('aria-label', 'Удалить место');
+
+    div.append(h2);
+    div.append(buttonLike);
+
+    article.append(img);
+    article.append(div);
+    article.append(buttonDelete);
+
+    return article;
 }
 
-function deleteElement() {
+function toggleLikeState(event) {
+    event.target.classList.toggle('element__like-button_liked');
+}
 
-    if (!this.hasAttribute('index')) {
-        return;
-    }
+function deleteElement(event) {
 
-    i = Number(this.getAttribute('index'));
+    const element = event.target.closest('.element');
 
-    console.log(i);
-    elementsDB.splice(i, 1);
-    renderElements();
+    if (!element) return;
+    element.remove();
+
 }
 
 function renderElements() {
 
     elements.innerHTML = '';
 
-    i = 0;
-    while (i < elementsDB.length) {
-        elements.insertAdjacentHTML('beforeend', `
-            <article class="element">
-                <img src="${elementsDB[i].link}" alt="${elementsDB[i].name}" class="element__image" />
-                <div class="element__caption">
-                    <h2 class="element__title">${elementsDB[i].name}</h2>
-                    <button class="button element__like-button" type="button" aria-label="Добавить лайк"></button>
-                </div>
-                <button class="button element__delete-button" type="button" aria-label="Удалить место" index="${i}"></button>
-            </article>
-        `);
+    elementsDB.forEach(element => elements.append(getElement(element.name, element.link)));
 
-        likeButtons = document.querySelectorAll('.element__like-button');
+    likeButtons = document.querySelectorAll('.element__like-button');
 
-        likeButtons.forEach(likeButton => {
-            likeButton.addEventListener('click', toggleLikeState);
-        });
+    likeButtons.forEach(likeButton => {
+        likeButton.addEventListener('click', toggleLikeState);
+    });
 
-        deleteButtons = document.querySelectorAll('.element__delete-button');
-        deleteButtons.forEach(deleteButton => {
-            deleteButton.addEventListener('click', deleteElement);
-        });
-
-        i += 1;
-    }
-
+    deleteButtons = document.querySelectorAll('.element__delete-button');
+    deleteButtons.forEach(deleteButton => {
+        deleteButton.addEventListener('click', deleteElement);
+    });
 }
 
 renderElements();
