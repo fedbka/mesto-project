@@ -9,7 +9,6 @@ function closePopup(event) {
 closeButtons = document.querySelectorAll('.popup__close-button');
 closeButtons.forEach(closebutton => closebutton.addEventListener('click', closePopup));
 
-
 // PROFILE EDIT FORM
 const profileEditButton = document.querySelector('.profile__edit-button');
 const popupProfileEdit = document.querySelector('.popup_profile-edit');
@@ -18,7 +17,6 @@ const inputUserName = document.querySelector('.form__item_user-name');
 const inputUserDescription = document.querySelector('.form__item_user-description');
 const profileUserName = document.querySelector('.profile__user-name');
 const profileUserDescription = document.querySelector('.profile__user-description');
-
 
 function openProfileEditForm() {
 
@@ -72,7 +70,7 @@ function addElement(event) {
 addElementButton.addEventListener('click', openAddElementForm);
 addElementForm.addEventListener('submit', addElement);
 
-//  RENDER ELEMENTS
+//  RENDER INTIAL ELEMENTS
 const elements = document.querySelector('.elements');
 const elementsDB = [
     {
@@ -123,12 +121,14 @@ function getElement(name, imageURL) {
     buttonLike.classList.add('element__like-button');
     buttonLike.setAttribute('type', 'button');
     buttonLike.setAttribute('aria-label', 'Добавить лайк');
+    buttonLike.addEventListener('click', toggleLikeState);
 
     const buttonDelete = document.createElement('button');
     buttonDelete.classList.add('button');
     buttonDelete.classList.add('element__delete-button');
     buttonDelete.setAttribute('type', 'button');
     buttonDelete.setAttribute('aria-label', 'Удалить место');
+    buttonDelete.addEventListener('click', deleteElement);
 
     div.append(h2);
     div.append(buttonLike);
@@ -159,16 +159,6 @@ function renderElements() {
 
     elementsDB.forEach(element => elements.append(getElement(element.name, element.link)));
 
-    likeButtons = document.querySelectorAll('.element__like-button');
-
-    likeButtons.forEach(likeButton => {
-        likeButton.addEventListener('click', toggleLikeState);
-    });
-
-    deleteButtons = document.querySelectorAll('.element__delete-button');
-    deleteButtons.forEach(deleteButton => {
-        deleteButton.addEventListener('click', deleteElement);
-    });
 }
 
 renderElements();
