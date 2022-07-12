@@ -26,59 +26,44 @@
             <button class="button profile__add-photo-button" type="button" aria-label="Добавить фото"></button>
         </section>
         <section class="elements" aria-label="Фотографии пользователя">
-            <article class="element">
-                <img src="./images/karachaevsk.jpg" alt="Старая крепость в Карачаевске" class="element__image" />
-                <div class="element__caption">
-                    <h2 class="element__title">Карачаевск</h2>
-                    <button class="button element__like-button" type="button" aria-label="Добавить лайк"></button>
-                </div>
-            </article>
-            <article class="element">
-                <img src="./images/elbrus.jpg" alt="Вершины Эльбруса вдали" class="element__image" />
-                <div class="element__caption">
-                    <h2 class="element__title">Гора Эльбрус</h2>
-                    <button class="button element__like-button" type="button" aria-label="Добавить лайк"></button>
-                </div>
-            </article>
-            <article class="element">
-                <img src="./images/dombai.jpg" alt="Вершина Домбая" class="element__image" />
-                <div class="element__caption">
-                    <h2 class="element__title">Домбай</h2>
-                    <button class="button element__like-button" type="button" aria-label="Добавить лайк"></button>
-                </div>
-            </article>
-            <article class="element">
-                <img src="./images/elbrus.jpg" alt="Вершины Эльбруса вдали" class="element__image" />
-                <div class="element__caption">
-                    <h2 class="element__title">Гора Эльбрус</h2>
-                    <button class="button element__like-button" type="button" aria-label="Добавить лайк"></button>
-                </div>
-            </article>
-            <article class="element">
-                <img src="./images/dombai.jpg" alt="Вершина Домбая" class="element__image" />
-                <div class="element__caption">
-                    <h2 class="element__title">Домбай</h2>
-                    <button class="button element__like-button" type="button" aria-label="Добавить лайк"></button>
-                </div>
-            </article>
-            <article class="element">
-                <img src="./images/karachaevsk.jpg" alt="Старая крепость в Карачаевске" class="element__image" />
-                <div class="element__caption">
-                    <h2 class="element__title">Карачаево-Черкас</h2>
-                    <button class="button element__like-button" type="button" aria-label="Добавить лайк"></button>
-                </div>
-            </article>
         </section>
-        <div class="popup">
+        <div class="popup popup_profile-edit">
             <div class="popup__container">
-                <form class="form" action="submit" name="userProfile">
+                <form class="form form_profile-edit" action="submit" id="userProfile" name="userProfile">
                     <h2 class="form__title">Редактировать профиль</h2>
                     <fieldset class="form__fieldset">
-                        <input class="form__item" type="text" name="userName" required placeholder="Имя" />
-                        <input class="form__item" type="text" name="userDescription" required placeholder="Описание" />
+                        <input class="form__item form__item_user-name" type="text" name="userName" required
+                            placeholder="Имя" />
+                        <input class="form__item form__item_user-description" type="text" name="userDescription"
+                            required placeholder="Описание" />
                     </fieldset>
                     <input class="button form__submit-button" type="submit" value="Сохранить" />
                 </form>
+                <button class="button popup__close-button" type="button" aria-label="Закрыть форму"></button>
+            </div>
+        </div>
+        <div class="popup popup_add-element">
+            <div class="popup__container">
+                <form class="form form_add-element" action="submit" id="addCard" name="addCard">
+                    <h2 class="form__title">Новое место</h2>
+                    <fieldset class="form__fieldset">
+                        <input class="form__item form__item_element-name" type="text" name="elementName" required
+                            placeholder="Название" />
+                        <input class="form__item form__item_element-image-url" type="text" name="elementImageUrl"
+                            required placeholder="Ссылка на картинку" />
+                    </fieldset>
+                    <input class="button form__submit-button" type="submit" value="Сохранить" />
+                </form>
+                <button class="button popup__close-button" type="button" aria-label="Закрыть форму"></button>
+            </div>
+        </div>
+        <div class="popup popup_with-image">
+            <div class="popup__image-container">
+                <section class="showroom" aria-label="Полноразмерная картинка">
+                    <img class="showroom__image"
+                        src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg" alt="Архыз">
+                    <h2 class="showroom__caption">Архыз</h2>
+                </section>
                 <button class="button popup__close-button" type="button" aria-label="Закрыть форму"></button>
             </div>
         </div>
@@ -86,6 +71,7 @@
     <footer class="footer">
         <p class="footer__copyright">&copy; 2022 Фадеев Андрей. PFA </p>
     </footer>
+    <script src="./pages/index.js"></script>
 </body>
 
 </html>
