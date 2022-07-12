@@ -108,6 +108,7 @@ function getElement(name, imageURL) {
     img.setAttribute('src', imageURL);
     img.setAttribute('alt', name);
     img.classList.add('element__image');
+    img.addEventListener('click', openShowroom);
 
     const div = document.createElement('div');
     div.classList.add('element__caption');
@@ -162,3 +163,18 @@ function renderElements() {
 }
 
 renderElements();
+
+// SHOWROOM
+
+const showroomImage = document.querySelector('.showroom__image');
+const showroomCaption = document.querySelector('.showroom__caption');
+const popupShowroom = document.querySelector('.popup_with-image');
+
+function openShowroom(event) {
+    image = event.target;
+
+    showroomImage.setAttribute('src', image.src);
+    showroomCaption.textContent = image.alt;
+
+    popupShowroom.classList.add('popup_opened');
+}
