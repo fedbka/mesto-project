@@ -71,6 +71,7 @@ addElementButton.addEventListener('click', openAddElementForm);
 addElementForm.addEventListener('submit', addElement);
 
 //  RENDER INTIAL ELEMENTS
+const elementTemplate = document.querySelector('template');
 const elements = document.querySelector('.elements');
 const elementsDB = [
     {
@@ -99,48 +100,6 @@ const elementsDB = [
     }
 ];
 
-function getElement(name, imageURL) {
-
-    const article = document.createElement('article');
-    article.classList.add('element');
-
-    const img = document.createElement('img');
-    img.setAttribute('src', imageURL);
-    img.setAttribute('alt', name);
-    img.classList.add('element__image');
-    img.addEventListener('click', openShowroom);
-
-    const div = document.createElement('div');
-    div.classList.add('element__caption');
-
-    const h2 = document.createElement('h2');
-    h2.classList.add('element__title');
-    h2.textContent = name;
-
-    const buttonLike = document.createElement('button');
-    buttonLike.classList.add('button');
-    buttonLike.classList.add('element__like-button');
-    buttonLike.setAttribute('type', 'button');
-    buttonLike.setAttribute('aria-label', 'Добавить лайк');
-    buttonLike.addEventListener('click', toggleLikeState);
-
-    const buttonDelete = document.createElement('button');
-    buttonDelete.classList.add('button');
-    buttonDelete.classList.add('element__delete-button');
-    buttonDelete.setAttribute('type', 'button');
-    buttonDelete.setAttribute('aria-label', 'Удалить место');
-    buttonDelete.addEventListener('click', deleteElement);
-
-    div.append(h2);
-    div.append(buttonLike);
-
-    article.append(img);
-    article.append(div);
-    article.append(buttonDelete);
-
-    return article;
-}
-
 function toggleLikeState(event) {
     event.target.classList.toggle('element__like-button_liked');
 }
@@ -152,6 +111,28 @@ function deleteElement(event) {
     if (!element) return;
     element.remove();
 
+}
+
+function getElement(name, imageURL) {
+
+    console.log(elementTemplate);
+    const template = elementTemplate.content.cloneNode(true);
+    
+    const img = template.querySelector('.element__image');
+    img.setAttribute('src', imageURL);
+    img.setAttribute('alt', name);
+    img.addEventListener('click', openShowroom);
+
+    const h2 = template.querySelector('.element__title');
+    h2.textContent = name;
+
+    const buttonLike = template.querySelector('.element__like-button');
+    buttonLike.addEventListener('click', toggleLikeState);
+
+    const buttonDelete = template.querySelector('.element__delete-button');
+    buttonDelete.addEventListener('click', deleteElement);
+
+    return template;
 }
 
 function renderElements() {
