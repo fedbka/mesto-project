@@ -1,13 +1,25 @@
 // Add to close buttons event listener for closing popups
 
-function closePopup(event) {
+function closePopup(popup) {
 
-    const popup = event.target.closest('.popup');
-    popup && popup.classList.remove('popup_opened');
+    popup.classList.remove('popup_opened');
+
 }
 
-closeButtons = document.querySelectorAll('.popup__close-button');
-closeButtons.forEach(closebutton => closebutton.addEventListener('click', closePopup));
+function openPopup(popup) {
+
+    popup.classList.add('popup_opened');
+
+}
+
+const closeButtons = document.querySelectorAll('.popup__close-button');
+
+closeButtons.forEach(closeButton => {
+
+    const popup = closeButton.closest('.popup');
+    closeButton.addEventListener('click', () => closePopup(popup));
+
+});
 
 // PROFILE EDIT FORM
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -23,7 +35,7 @@ function openProfileEditForm() {
     inputUserName.value = profileUserName.textContent;
     inputUserDescription.value = profileUserDescription.textContent;
 
-    popupProfileEdit.classList.add('popup_opened');
+    openPopup(popupProfileEdit);
 
 }
 
@@ -33,7 +45,8 @@ function closeProfileEditForm(event) {
     profileUserName.textContent = inputUserName.value;
     profileUserDescription.textContent = inputUserDescription.value;
 
-    popupProfileEdit.classList.remove('popup_opened');
+    closePopup(popupProfileEdit);
+
 }
 
 profileEditButton.addEventListener('click', openProfileEditForm);
@@ -49,28 +62,21 @@ const inputElementImageURL = document.querySelector('.form__item_element-image-u
 
 const addElementForm = document.querySelector('.form_add-element');
 
-function openAddElementForm() {
-
-    popupAddElement.classList.add('popup_opened');
-
-}
-
 function addElement(event) {
     event.preventDefault();
 
     elements.prepend(getElement(inputElementName.value, inputElementImageURL.value))
 
-    inputElementName.value = "";
-    inputElementImageURL.value = "";
+    addElementForm.reset();
 
-    popupAddElement.classList.remove('popup_opened');
+    closePopup(popupAddElement);
 
 }
 
-addElementButton.addEventListener('click', openAddElementForm);
+addElementButton.addEventListener('click', () => openPopup(popupAddElement));
 addElementForm.addEventListener('submit', addElement);
 
-//  RENDER INTIAL ELEMENTS
+//  RENDER INITIAL ELEMENTS
 const elementTemplate = document.querySelector('template');
 const elements = document.querySelector('.elements');
 const elementsDB = [
@@ -109,6 +115,7 @@ function deleteElement(event) {
     const element = event.target.closest('.element');
 
     if (!element) return;
+
     element.remove();
 
 }
@@ -116,7 +123,7 @@ function deleteElement(event) {
 function getElement(name, imageURL) {
 
     const template = elementTemplate.content.cloneNode(true);
-    
+
     const img = template.querySelector('.element__image');
     img.setAttribute('src', imageURL);
     img.setAttribute('alt', name);
@@ -151,10 +158,12 @@ const showroomCaption = document.querySelector('.showroom__caption');
 const popupShowroom = document.querySelector('.popup_with-image');
 
 function openShowroom(event) {
-    image = event.target;
 
+    const image = event.target;
     showroomImage.setAttribute('src', image.src);
+    showroomImage.setAttribute('alt', image.alt);
     showroomCaption.textContent = image.alt;
 
-    popupShowroom.classList.add('popup_opened');
+    openPopup(popupShowroom);
+
 }
