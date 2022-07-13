@@ -93,7 +93,7 @@ function openShowroom(name, imageURL) {
 }
 
 elementsDB.forEach(element => elements.append(getElement(element.name, element.link)));
-document.querySelectorAll('.popup__close-button').forEach(closeButton => closeButton.addEventListener('click', () => closePopup(closeButton.closest('.popup'))));
+document.querySelectorAll('.popup__close-button').forEach(button => button.addEventListener('click', () => closePopup(button.closest('.popup'))));
 profileEditButton.addEventListener('click', openProfileEditForm);
 profileEditForm.addEventListener('submit', closeProfileEditForm);
 addElementButton.addEventListener('click', () => openPopup(popupAddElement));
