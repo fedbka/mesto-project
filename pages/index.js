@@ -115,7 +115,6 @@ function deleteElement(event) {
 
 function getElement(name, imageURL) {
 
-    console.log(elementTemplate);
     const template = elementTemplate.content.cloneNode(true);
     
     const img = template.querySelector('.element__image');
