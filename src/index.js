@@ -1,3 +1,5 @@
+
+import './index.css';
 // Add to close buttons event listener for closing popups
 
 function closePopup(popup) {
