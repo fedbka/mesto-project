@@ -1,4 +1,3 @@
-
 import './index.css';
 const profileEditButton = document.querySelector('.profile__edit-button');
 const popupProfileEdit = document.querySelector('.popup_profile-edit');
