@@ -28,13 +28,19 @@
         </section>
         <div class="popup popup_profile-edit">
             <div class="popup__container">
-                <form class="form form_profile-edit" action="submit" id="userProfile" name="userProfile">
+                <form class="form" action="submit" id="userProfile" name="userProfile">
                     <h2 class="form__title">Редактировать профиль</h2>
                     <fieldset class="form__fieldset">
-                        <input class="form__item form__item_user-name" type="text" name="userName" required
-                            placeholder="Имя" />
+                        <input class="form__item form__item_user-name" type="text" name="username" required
+                            placeholder="Имя" id="username-input" minlength="2" maxlength="40"
+                            pattern="^[a-zA-Zа-яА-Я-\s]+$"
+                            data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" />
+                        <span class="form__input-error username-input-error"></span>
                         <input class="form__item form__item_user-description" type="text" name="userDescription"
-                            required placeholder="Описание" />
+                            required placeholder="О себе" id="userDescription-input" minlength="2" maxlength="200"
+                            pattern="^[a-zA-Zа-яА-Я-\s]+$"
+                            data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" />
+                        <span class="form__input-error userDescription-input-error"></span>
                     </fieldset>
                     <input class="button form__submit-button" type="submit" value="Сохранить" />
                 </form>
@@ -43,13 +49,17 @@
         </div>
         <div class="popup popup_add-element">
             <div class="popup__container">
-                <form class="form form_add-element" action="submit" id="addCard" name="addCard">
+                <form class="form" action="submit" id="newCard" name="newCard">
                     <h2 class="form__title">Новое место</h2>
                     <fieldset class="form__fieldset">
-                        <input class="form__item form__item_element-name" type="text" name="elementName" required
-                            placeholder="Название" />
-                        <input class="form__item form__item_element-image-url" type="text" name="elementImageUrl"
-                            required placeholder="Ссылка на картинку" />
+                        <input class="form__item" type="text" name="elementName" required
+                            placeholder="Название" id="elementName-input" minlength="2" maxlength="30"
+                            pattern="^[a-zA-Zа-яА-Я-\s]+$"
+                            data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" />
+                        <span class="form__input-error elementName-input-error"></span>
+                        <input class="form__item" type="url" name="elementImageUrl"
+                            required placeholder="Ссылка на картинку" id="elementImageUrl-input" />
+                        <span class="form__input-error elementImageUrl-input-error"></span>
                     </fieldset>
                     <input class="button form__submit-button" type="submit" value="Сохранить" />
                 </form>
