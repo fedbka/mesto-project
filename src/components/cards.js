@@ -1,3 +1,5 @@
+import * as modal from './modal';
+
 const cardsDB = [
     {
         name: 'Архыз',
@@ -24,35 +26,47 @@ const cardsDB = [
         imageUrl: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }];
 
-export const createCardMarkup = (cardName, cardImageUrl, cardMarkupTemplate) => {
+export const selectorCardTemplate = '#element__template';
+export const selectorCardsContainer = '.elements';
+export const selectorCardImage = '.element__image';
+export const selectorCardTitle = '.element__title';
+export const selectorCardLikeButton = '.element__like-button';
+export const selectorCardDeleteButton = '.element__delete-button';
+export const selectorCardElement = '.element';
+
+export const cardsContainer = document.querySelector(selectorCardsContainer);
+export const cardMarkupTemplate = document.querySelector(selectorCardTemplate); 
+
+export const createCardMarkup = (cardName, cardImageUrl) => {
+    
     const cardMarkup = cardMarkupTemplate.content.cloneNode(true);
     
-    const cardImage = cardMarkup.querySelector('.element__image');
+    const cardImage = cardMarkup.querySelector(selectorCardImage);
     cardImage.setAttribute('src', cardImageUrl);
     cardImage.setAttribute('alt', cardName);
-    //cardImage.addEventListener('click', () => modal.openShowroom(cardName, cardImageUrl));
+    cardImage.addEventListener('click', () => modal.openShowroomPopup
+    (cardName, cardImageUrl));
 
-    const cardTitle = cardMarkup.querySelector('.element__title');
+    const cardTitle = cardMarkup.querySelector(selectorCardTitle);
     cardTitle.textContent = cardName;
 
-    const cardLikeButton = cardMarkup.querySelector('.element__like-button');
+    const cardLikeButton = cardMarkup.querySelector(selectorCardLikeButton);
     cardLikeButton.addEventListener('click', () => cardLikeButton.classList.toggle('element__like-button_liked'));
 
-    const cardDeleteButton = cardMarkup.querySelector('.element__delete-button');
-    const cardNode = cardMarkup.querySelector('.element');
+    const cardDeleteButton = cardMarkup.querySelector(selectorCardDeleteButton);
+    const cardNode = cardMarkup.querySelector(selectorCardElement);
     cardDeleteButton.addEventListener('click', () => cardNode.remove());
 
     return cardMarkup;
 }
 
-export const renderCard = (cardsContainer, cardMarkup) => {
+export const renderCard = (cardMarkup) => {
     cardsContainer.append(cardMarkup);
 }
 
-export const renderInitialCards = (cardsContainer, cardMarkupTemplate) => {
-    cardsDB.forEach(cardData => {
-        const cardMarkup = createCardMarkup(cardData.name, cardData.imageUrl, cardMarkupTemplate);
-        renderCard(cardsContainer, cardMarkup);
-    });
+export const renderInitialCards = () => {
+    
+    cardsDB.forEach(cardData => renderCard(createCardMarkup(cardData.name, cardData.imageUrl)));
+
 }
 

@@ -15,6 +15,12 @@
   line-height: 22px;
 }
 
+.form__submit-button:disabled {
+  background-color: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.2); 
+}
+
 @media screen and (max-width: 617px) {
   .form__submit-button {
     font-size: 14px;
