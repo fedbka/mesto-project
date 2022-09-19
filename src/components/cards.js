@@ -61,7 +61,7 @@ export const createCardMarkup = (cardName, cardImageUrl) => {
 }
 
 export const renderCard = (cardMarkup) => {
-    cardsContainer.append(cardMarkup);
+    cardsContainer.prepend(cardMarkup);
 }
 
 export const renderInitialCards = () => {

@@ -23,6 +23,10 @@ const enableFormValidation = (form, validationParams) => {
         checkInputValidity(input, inputsErrors.get(input));
         toggleFormButtonState(inputs, formSubmitButton);
     }));
+
+    form.addEventListener('reset', () => {
+        toggleFormButtonState(inputs, formSubmitButton);
+    })
 }
 
 const disableDefaultValidation = (form) => {

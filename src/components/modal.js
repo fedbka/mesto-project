@@ -20,10 +20,6 @@ function closePopupOnEsc(evt) {
     closePopup(openPopup)
 }
 
-const closePopupsButtons = [...document.querySelectorAll('.popup__close-button')];
-closePopupsButtons.forEach(button => {
-    button.addEventListener('click', () => closePopup(button.closest('.popup')));
-});
 
 // Image Showroom Modal
 
@@ -83,10 +79,11 @@ formNewCard.addEventListener('submit', submitFormNewCard);
 
 function submitFormNewCard() {
 
+    closePopup(newCardPopup);
     const cardMarkup = card.createCardMarkup(formNewCard.elements.elementName.value, formNewCard.elements.elementImageUrl.value);
     card.renderCard(cardMarkup);
     formNewCard.reset();
-    closePopup(newCardPopup);
+    
 
 }
 

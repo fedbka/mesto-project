@@ -20,9 +20,9 @@ editProfileButton.addEventListener('click', modal.openProfileEditPopup);
 const addNewCardButton = document.querySelector('.profile__add-photo-button');
 addNewCardButton.addEventListener('click', modal.openAddNewCardPopup);
 
-const overlays = [...document.querySelectorAll('.popup')];
-overlays.forEach(overlay => overlay.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('popup')) {
-        modal.closePopup(evt.target);
+const popups = [...document.querySelectorAll('.popup')];
+popups.forEach(popup => popup.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close-button')) {
+        modal.closePopup(popup);
     }
 }));
