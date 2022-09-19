@@ -2,8 +2,12 @@ import './index.css';
 import * as validation from './components/validate';
 import * as cards from './components/cards';
 import * as modal from './components/modal';
+import * as profile from './components/profile';
 
-cards.renderInitialCards();
+profile.requestProfileData()
+    .then(cards.renderCards(true));
+
+
 
 const validationParametrs = {
     formSelector: '.form',

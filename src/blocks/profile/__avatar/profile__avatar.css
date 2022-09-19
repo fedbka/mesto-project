@@ -6,4 +6,5 @@
   width: 120px;
   max-width: 120px;
   justify-self: self-start;
+  object-fit: cover;
 }
