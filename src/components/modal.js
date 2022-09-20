@@ -30,12 +30,6 @@ function setNormalStatus(element) {
     element.textContent = 'Сохранить';
 }
 
-function setErrorStatus(element) {
-    element.textContent = 'Возникла ошибка';
-}
-
-
-
 // Image Showroom Modal
 
 const showroomImage = document.querySelector('.showroom__image');
@@ -65,13 +59,13 @@ function submitFormUserProfile() {
             profile.setProfile(profileData);
             profile.renderProfile();
             closePopup(profileEditPopup);
-            setNormalStatus(formEditProfileSubmitButton)
+            formEditProfile.reset();
         })
         .catch(err => {
+            showErrorPopup(err);
+        })
+        .finally(() => {
             setNormalStatus(formEditProfileSubmitButton);
-            console.log(err);
-            closePopup(profileEditPopup);
-            formEditProfile.reset();
         });
     
 }
@@ -100,13 +94,12 @@ function submitFormNewCard() {
             cards.renderCard(cards.createCardMarkup(card), true);
             closePopup(newCardPopup);
             formNewCard.reset();
-            setNormalStatus(formNewCardSubmitButton);
         })
         .catch(err => {
+            showErrorPopup(err);
+        })
+        .finally(() => {
             setNormalStatus(formNewCardSubmitButton);
-            console.log(err);
-            closePopup(newCardPopup);
-            formNewCard.reset();
         });
 }
 
@@ -132,17 +125,45 @@ function submitFormUpdateAvatar() {
             profile.renderProfile();
             closePopup(updateAvatarPopup);
             formUpdateAvatar.reset();
-            setNormalStatus(formUpdateAvatarSubmitButton);
         })
         .catch(err => {
+            showErrorPopup(err);
+        })
+        .finally(() => {
             setNormalStatus(formUpdateAvatarSubmitButton);
-            console.log(err);
-            closePopup(updateAvatarPopup);
-            formUpdateAvatar.reset();
         });
 }
 
 export function openUpdateAvatarPopup() {
     formUpdateAvatar.elements.avatarImageUrl.value = profile.currentUser.avatar;
     openPopup(updateAvatarPopup);
+}
+
+// Show Error Modal
+const errorPopup = document.querySelector('.popup_show-error');
+const errorTextElement = errorPopup.querySelector('.popup__error');
+const errorSubmitButton = errorPopup.querySelector('.form__submit-button');
+
+export const showErrorPopup = (errorText) => {
+    errorTextElement.textContent = errorText;
+    openPopup(errorPopup);
+}
+
+errorSubmitButton.addEventListener('click', () => {
+    errorTextElement.textContent = '';
+    closePopup(errorPopup);
+});
+
+// Confirm Modal
+
+const formConfirm = document.forms.confirm;
+const confirmPopup = document.querySelector('.popup_confirm');
+
+export const confirmAction = (actionAfterConfirm) => {
+    formConfirm.addEventListener('submit', actionAfterConfirm);
+    openPopup(confirmPopup);
+}
+
+export const closeConfirmPopup = () => {
+    closePopup(confirmPopup);
 }

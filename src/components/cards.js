@@ -3,17 +3,17 @@ import * as profile from './profile';
 import * as api from './api';
 
 export const cards = [];
-export const selectorCardTemplate = '#element__template';
-export const selectorCardsContainer = '.elements';
-export const selectorCardImage = '.element__image';
-export const selectorCardTitle = '.element__title';
-export const selectorCardLikeButton = '.element__like-button';
-export const selectorCardDeleteButton = '.element__delete-button';
-export const selectorCardElement = '.element';
-export const selectorCardLikesCount = '.element__likes-count';
+const selectorCardTemplate = '#element__template';
+const selectorCardsContainer = '.elements';
+const selectorCardImage = '.element__image';
+const selectorCardTitle = '.element__title';
+const selectorCardLikeButton = '.element__like-button';
+const selectorCardDeleteButton = '.element__delete-button';
+const selectorCardElement = '.element';
+const selectorCardLikesCount = '.element__likes-count';
 
-export const cardsContainer = document.querySelector(selectorCardsContainer);
-export const cardMarkupTemplate = document.querySelector(selectorCardTemplate); 
+const cardsContainer = document.querySelector(selectorCardsContainer);
+const cardMarkupTemplate = document.querySelector(selectorCardTemplate); 
 
 export const createCardMarkup = (card) => {
     const cardMarkup = cardMarkupTemplate.content.cloneNode(true);
@@ -36,9 +36,14 @@ export const createCardMarkup = (card) => {
     
     cardLikeButton.addEventListener('click', () => {
         const updatedCard = cardLikeButton.classList.contains('element__like-button_liked') ? api.unsetLike(card._id) : api.setLike(card._id);
-        updatedCard.then(updatedCardData => cardLikesCount.textContent = updatedCardData.likes.length);
+        updatedCard
+            .then(updatedCardData => {
+            cardLikesCount.textContent = updatedCardData.likes.length
+            cardLikeButton.classList.toggle('element__like-button_liked')
+            })
+            .catch((error) => modal.showErrorPopup(error));
 
-        cardLikeButton.classList.toggle('element__like-button_liked')
+        
     });
 
 
@@ -48,13 +53,21 @@ export const createCardMarkup = (card) => {
         cardDeleteButton.classList.add('element__like-button_hidden');
     } else {
         const cardNode = cardMarkup.querySelector(selectorCardElement);
-        cardDeleteButton.addEventListener('click', () => {
-            api.removeCard(card._id)
-                .then(cardNode.remove());
-        });
+        cardDeleteButton.addEventListener('click', () => modal.confirmAction(() => {
+            removeCard(card._id, cardNode)
+                .then(() => {
+                    modal.closeConfirmPopup();
+                });
+        }));
     }
     return cardMarkup;
 }
+
+const removeCard = (cardID, cardNode) => {
+    return api.removeCard(cardID)
+    .then(()=> cardNode.remove())
+    .catch((error) => modal.showErrorPopup(error));
+} 
 
 export const renderCard = (cardMarkup, toBegining = true) => {
     
@@ -63,18 +76,8 @@ export const renderCard = (cardMarkup, toBegining = true) => {
 }
 
 export const renderCards = function(requestCards) {
-    if (!requestCards) {
-        cards.forEach(card => renderCard(createCardMarkup(card), false));
-        return;
-    }
 
-    cards.splice(0, cards.length);
-    api.getInitialCards()
-        .then(json => json.forEach(card => {
-            cards.push(card);
-            renderCard(createCardMarkup(card), false);
-        }))
-        .catch(error => console.log(error));
+    cards.forEach(card => renderCard(createCardMarkup(card), false));
 
 }
 
