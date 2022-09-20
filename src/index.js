@@ -4,7 +4,7 @@ import * as cards from './components/cards';
 import * as modal from './components/modal';
 import * as profile from './components/profile';
 
-profile.requestProfileData()
+profile.getProfile()
     .then(cards.renderCards(true));
 
 
@@ -23,6 +23,9 @@ editProfileButton.addEventListener('click', modal.openProfileEditPopup);
 
 const addNewCardButton = document.querySelector('.profile__add-photo-button');
 addNewCardButton.addEventListener('click', modal.openAddNewCardPopup);
+
+const avatarImage = document.querySelector('.profile__avatar');
+avatarImage.addEventListener('click', modal.openUpdateAvatarPopup);
 
 const popups = [...document.querySelectorAll('.popup')];
 popups.forEach(popup => popup.addEventListener('mousedown', (evt) => {

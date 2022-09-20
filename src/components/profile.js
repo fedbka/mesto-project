@@ -1,6 +1,6 @@
-import * as utils from './utils';
+import * as api from './api';
 
-export let userData = {
+export let currentUser = {
     name: '',
     about: '',
     avatar: '',
@@ -8,19 +8,23 @@ export let userData = {
     cohort: '',
 }
 
-function setProfileData(profileData) {
-    userData = {...profileData};
+export function setProfile(profile) {
+    currentUser = {...profile};
 }
 
-export function requestProfileData() {
-    return fetch(utils.urlMe, utils.fetchHeaders)
-        .then(res => {
-            if (res.ok) return res.json();
-            return utils.processError(res);
-        })
-        .then(profileData => {
-            setProfileData(profileData);
-            renderUserData();
+export function checkMeIn(users) {
+    return users.some(user => usersEqual(user, currentUser));
+}
+
+export function usersEqual(user1, user2) {
+    return user1._id === user2._id;
+}
+
+export function getProfile() {
+    return api.getProfile()
+        .then(profile => {
+            setProfile(profile);
+            renderProfile();
         })
         .catch();
 }
@@ -29,8 +33,8 @@ const nodeProfileUsername = document.querySelector('.profile__user-name');
 const nodeProfileDescription = document.querySelector('.profile__user-description');
 const nodeProfileAvatar = document.querySelector('.profile__avatar');
 
-export function renderUserData() {
-    nodeProfileUsername.textContent = userData.name;
-    nodeProfileDescription.textContent = userData.about;
-    nodeProfileAvatar.setAttribute('src', userData.avatar);
+export function renderProfile() {
+    nodeProfileUsername.textContent = currentUser.name;
+    nodeProfileDescription.textContent = currentUser.about;
+    nodeProfileAvatar.setAttribute('src', currentUser.avatar);
 }
