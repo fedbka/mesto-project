@@ -6,4 +6,13 @@
   width: 120px;
   max-width: 120px;
   justify-self: self-start;
+  object-fit: cover;
+  cursor: pointer;
+  position: relative;
+  background: black;
 }
+
+.profile__avatar:hover {
+  opacity: 0.6;
+}
+

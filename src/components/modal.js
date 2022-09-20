@@ -1,4 +1,6 @@
-import * as card from './cards';
+import * as cards from './cards';
+import * as api from './api';
+import * as profile from './profile';
 
 const showPopupCssClassName = 'popup_opened';
 
@@ -20,6 +22,19 @@ function closePopupOnEsc(evt) {
     closePopup(openPopup)
 }
 
+function setSavingStatus(element) {
+    element.textContent = 'Сохранение...';
+}
+
+function setNormalStatus(element) {
+    element.textContent = 'Сохранить';
+}
+
+function setErrorStatus(element) {
+    element.textContent = 'Возникла ошибка';
+}
+
+
 
 // Image Showroom Modal
 
@@ -37,54 +52,62 @@ export function openShowroomPopup(name, imageURL) {
 
 // Profile Edit Modal
 
+const formEditProfile = document.forms.userProfile;
+const formEditProfileSubmitButton = formEditProfile.querySelector('.form__submit-button');
+formEditProfile.addEventListener('submit', submitFormUserProfile);
+
 const profileEditPopup = document.querySelector('.popup_profile-edit');
-const profileUsername = document.querySelector('.profile__user-name')
-const profileUserDescription = document.querySelector('.profile__user-description')
-
-const formUserProfile = document.forms.userProfile;
-formUserProfile.addEventListener('submit', submitFormUserProfile);
-
-function getCurrentProfileData() {
-    return {
-        username: profileUsername.textContent,
-        userDescription: profileUserDescription.textContent,
-    }
-}
-
-function setCurrentProfileData() {
-
-    profileUsername.textContent = formUserProfile.elements.username.value;
-    profileUserDescription.textContent = formUserProfile.elements.userDescription.value;
-
-}
 
 function submitFormUserProfile() {
-    setCurrentProfileData();
-    closePopup(profileEditPopup);
+    setSavingStatus(formEditProfileSubmitButton);
+    api.updateProfile(formEditProfile.elements.username.value, formEditProfile.elements.userDescription.value)
+        .then(profileData => {
+            profile.setProfile(profileData);
+            profile.renderProfile();
+            closePopup(profileEditPopup);
+            setNormalStatus(formEditProfileSubmitButton)
+        })
+        .catch(err => {
+            setNormalStatus(formEditProfileSubmitButton);
+            console.log(err);
+            closePopup(profileEditPopup);
+            formEditProfile.reset();
+        });
+    
 }
 
 export function openProfileEditPopup() {
-    const currentProfile = getCurrentProfileData();
-    formUserProfile.elements.username.value = currentProfile.username;
-    formUserProfile.elements.userDescription.value = currentProfile.userDescription;
+    formEditProfile.reset();
+    formEditProfile.elements.username.value = profile.currentUser.name;
+    formEditProfile.elements.userDescription.value = profile.currentUser.about;
     openPopup(profileEditPopup);
 }
 
 // New Card Modal
 
 const formNewCard = document.forms.newCard;
+const formNewCardSubmitButton = formNewCard.querySelector('.form__submit-button');
+
 const newCardPopup = document.querySelector('.popup_add-element');
 
 formNewCard.addEventListener('submit', submitFormNewCard);
 
 function submitFormNewCard() {
-
-    closePopup(newCardPopup);
-    const cardMarkup = card.createCardMarkup(formNewCard.elements.elementName.value, formNewCard.elements.elementImageUrl.value);
-    card.renderCard(cardMarkup);
-    formNewCard.reset();
-    
-
+    setSavingStatus(formNewCardSubmitButton);
+    api.addCard(formNewCard.elements.elementName.value, formNewCard.elements.elementImageUrl.value)
+        .then(card => {
+            cards.cards.unshift(card);
+            cards.renderCard(cards.createCardMarkup(card), true);
+            closePopup(newCardPopup);
+            formNewCard.reset();
+            setNormalStatus(formNewCardSubmitButton);
+        })
+        .catch(err => {
+            setNormalStatus(formNewCardSubmitButton);
+            console.log(err);
+            closePopup(newCardPopup);
+            formNewCard.reset();
+        });
 }
 
 export function openAddNewCardPopup() {
@@ -92,3 +115,34 @@ export function openAddNewCardPopup() {
     openPopup(newCardPopup);
 }
 
+// Update Avatar Modal
+
+const formUpdateAvatar = document.forms.updateAvatar;
+const formUpdateAvatarSubmitButton = formUpdateAvatar.querySelector('.form__submit-button');
+
+const updateAvatarPopup = document.querySelector('.popup_avatar-edit');
+
+formUpdateAvatar.addEventListener('submit', submitFormUpdateAvatar);
+
+function submitFormUpdateAvatar() {
+    setSavingStatus(formUpdateAvatarSubmitButton);
+    api.updateAvatar(formUpdateAvatar.elements.avatarImageUrl.value)
+        .then(profileData => {
+            profile.setProfile(profileData);
+            profile.renderProfile();
+            closePopup(updateAvatarPopup);
+            formUpdateAvatar.reset();
+            setNormalStatus(formUpdateAvatarSubmitButton);
+        })
+        .catch(err => {
+            setNormalStatus(formUpdateAvatarSubmitButton);
+            console.log(err);
+            closePopup(updateAvatarPopup);
+            formUpdateAvatar.reset();
+        });
+}
+
+export function openUpdateAvatarPopup() {
+    formUpdateAvatar.elements.avatarImageUrl.value = profile.currentUser.avatar;
+    openPopup(updateAvatarPopup);
+}

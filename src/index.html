@@ -16,11 +16,11 @@
     </header>
     <main class="content">
         <section class="profile" aria-label="Профиль пользователя">
-            <img src="<%=require('./images/profile__avatar.jpg')%>" alt="Аватар пользователя" class="profile__avatar" />
+            <img src="" alt="Аватар пользователя" class="profile__avatar" />
             <div class="profile__info">
-                <h1 class="profile__user-name">Жак-Ив Кусто</h1>
+                <h1 class="profile__user-name">Загружается...</h1>
                 <button class="button profile__edit-button" type="button" aria-label="Изменить профиль"></button>
-                <p class="profile__user-description">Исследователь океана</p>
+                <p class="profile__user-description">Загружается...</p>
             </div>
             <button class="button profile__add-photo-button" type="button" aria-label="Добавить фото"></button>
         </section>
@@ -42,7 +42,7 @@
                             data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" />
                         <span class="form__input-error userDescription-input-error"></span>
                     </fieldset>
-                    <input class="button form__submit-button" type="submit" value="Сохранить" />
+                    <button class="button form__submit-button" type="submit">Сохранить</button>
                 </form>
                 <button class="button popup__close-button" type="button" aria-label="Закрыть форму"></button>
             </div>
@@ -61,11 +61,34 @@
                             required placeholder="Ссылка на картинку" id="elementImageUrl-input" />
                         <span class="form__input-error elementImageUrl-input-error"></span>
                     </fieldset>
-                    <input class="button form__submit-button" type="submit" value="Сохранить" />
+                    <button class="button form__submit-button" type="submit"/>Сохранить</button>
                 </form>
                 <button class="button popup__close-button" type="button" aria-label="Закрыть форму"></button>
             </div>
         </div>
+        <div class="popup popup_avatar-edit">
+            <div class="popup__container">
+                <form class="form" action="submit" id="updateAvatar" name="updateAvatar">
+                    <h2 class="form__title">Обновить аватар</h2>
+                    <fieldset class="form__fieldset">
+                        <input class="form__item" type="url" name="avatarImageUrl"
+                            required placeholder="Ссылка на аватар" id="avatarImageUrl-input" />
+                        <span class="form__input-error avatarImageUrl-input-error"></span>
+                    </fieldset>
+                    <button class="button form__submit-button" type="submit"/>Сохранить</button>
+                </form>
+                <button class="button popup__close-button" type="button" aria-label="Закрыть форму"></button>
+            </div>
+        </div>
+        <div class="popup popup_confirm-delete">
+            <div class="popup__container">
+                <form class="form" action="submit" id="confirmElementDelete" name="confirmElementDelete    ">
+                    <h2 class="form__title">Вы уверены?</h2>
+                    <button class="button form__submit-button" type="submit"/>Да</button>
+                </form>
+                <button class="button popup__close-button" type="button" aria-label="Закрыть форму"></button>
+            </div>
+        </div>        
         <div class="popup popup_with-image">
             <div class="popup__image-container">
                 <section class="showroom" aria-label="Полноразмерная картинка">
@@ -85,7 +108,11 @@
             <img src="" alt="" class="element__image" />
             <div class="element__caption">
                 <h2 class="element__title"></h2>
-                <button class="button element__like-button" type="button" aria-label="Добавить лайк"></button>
+                <div class="element__likes">
+                    <button class="button element__like-button" type="button" aria-label="Добавить лайк"></button>
+                    <p class="element__likes-count"></p>
+                </div>
+                
             </div>
             <button class="button element__delete-button" type="button" aria-label="Удалить место"></button>
         </article>
