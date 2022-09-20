@@ -9,10 +9,6 @@ export const config = {
     }
 }
 
-export const processError = function(error) {
-    return Promise.reject(`Что-то пошло не так: ${error.status}`);
-}
-
 export const requestData = (request, method = 'GET', body = '') => {
     
     const params = {
@@ -25,7 +21,7 @@ export const requestData = (request, method = 'GET', body = '') => {
     return fetch(`${config.baseUrl}/${request}`, params)
         .then(res => {
             if (res.ok) return res.json();
-            processError(res);
+            return Promise.reject(res);
         });
 }
 

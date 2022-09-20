@@ -1,13 +1,18 @@
 import './index.css';
+import * as api from './components/api';
 import * as validation from './components/validate';
 import * as cards from './components/cards';
 import * as modal from './components/modal';
 import * as profile from './components/profile';
 
-profile.getProfile()
-    .then(cards.renderCards(true));
-
-
+Promise.all([api.getProfile(), api.getInitialCards()])
+    .then(([profileData, cardsData]) => {
+        profile.setProfile(profileData);
+        profile.renderProfile();
+        cardsData.forEach(card => cards.cards.push(card));
+        cards.renderCards();        
+    })
+    .catch(error => modal.showErrorPopup(error));
 
 const validationParametrs = {
     formSelector: '.form',
