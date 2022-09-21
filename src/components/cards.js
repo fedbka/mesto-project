@@ -42,8 +42,6 @@ export const createCardMarkup = (card) => {
             cardLikeButton.classList.toggle('element__like-button_liked')
             })
             .catch((error) => modal.showErrorPopup(error));
-
-        
     });
 
 
@@ -53,7 +51,7 @@ export const createCardMarkup = (card) => {
         cardDeleteButton.classList.add('element__like-button_hidden');
     } else {
         const cardNode = cardMarkup.querySelector(selectorCardElement);
-        cardDeleteButton.addEventListener('click', () => modal.confirmAction(() => {
+        cardDeleteButton.addEventListener('click', () => modal.showConfirmActionPopup(() => {
             removeCard(card._id, cardNode)
                 .then(() => {
                     modal.closeConfirmPopup();
