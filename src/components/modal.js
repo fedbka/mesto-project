@@ -156,11 +156,18 @@ errorSubmitButton.addEventListener('click', () => {
 
 // Confirm Modal
 
+let confirmedAction = undefined;
 const formConfirm = document.forms.confirm;
 const confirmPopup = document.querySelector('.popup_confirm');
 
-export const confirmAction = (actionAfterConfirm) => {
-    formConfirm.addEventListener('submit', actionAfterConfirm);
+function doConfirmedAction() {
+    if (confirmedAction && typeof(confirmedAction) == 'function') confirmedAction();
+}
+
+formConfirm.addEventListener('submit', doConfirmedAction);
+
+export const showConfirmActionPopup = (actionAfterConfirm) => {
+    confirmedAction = actionAfterConfirm;
     openPopup(confirmPopup);
 }
 
