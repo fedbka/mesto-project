@@ -1,26 +1,22 @@
 import Popup from "./Popup";
 
-export default class PopupWithForm extends Popup {
-   
-    constructor(selectorPopup, submitHandler) {
-        super(selectorPopup);
+export default class PopupWithForm extends Popup {   
+    constructor(selectorPopup, buttonFormSubmit, submitHandler) {
+        super(selectorPopup, buttonFormSubmit);
         this._form = this._elementPopup.querySelector('.form');
-        this._form.setAttribute('novalidation', true);
         this._submitHandler = this._getSubmitHandler(submitHandler);
     }
 
     _getSubmitHandler(submitHandler) {
-
         return () => {
-            super.setTextFormSubmitButton('Отравляем данные...');
+            super.setTextFormSubmitButton('Отправляем данные...');
             submitHandler(this._getInputValues())
             .finally(() => this.close());
         }
     } 
+
     _getInputValues() {
-
         const { elements } = this._form;
-
         const formValues = Array.from(elements)
           .map((element) => {
             const { name, type } = element
@@ -46,30 +42,27 @@ export default class PopupWithForm extends Popup {
     }
 
     getFormElement() {
-
         return this._form;
     }
 
     setEventListeners() {
-
+        this._elementPopup.addEventListener('submit', (evt) => evt.preventDefault());
         super.setEventListeners();
         this._form.addEventListener('submit', this._submitHandler);
     }
 
     removeEventListeners() {
-
+        this._elementPopup.removeEventListener('submit', (evt) => evt.preventDefault());
         this._form.removeEventListener('submit', this._submitHandler);
         super.removeEventListeners();        
     }
 
     open(inputValues) {
-
         if (!!inputValues) this._setInputValues(inputValues); 
         super.open();
     }
 
-    close() {
-        
+    close() {        
         super.close();
         this._form.reset();
     }

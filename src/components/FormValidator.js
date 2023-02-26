@@ -1,7 +1,6 @@
 export default class FormValidator {
 
     constructor({ selectorInput, selectorInputError, selectorSubmitButton }, formElement) {
-
         this._formElement = formElement;
         this._inputs = [...this._formElement.querySelectorAll(selectorInput)];
         this._inputsErrors = new Map;
@@ -12,34 +11,29 @@ export default class FormValidator {
         this._formSubmitButton = this._formElement.querySelector(selectorSubmitButton);
     }
 
-    _hasInvalidInput = () => {
-
-        return this._inputs.some(input => !input.validity.valid);
+    _hasInvalidInput () {
+        return this._inputs.some(input => !this._input.validity.valid);
     }
 
-    _toggleFormButtonState = () => {
-
+    _toggleFormButtonState () {
         this._hasInvalidInput(this._inputs) ? this._formSubmitButton.setAttribute('disabled', true) : this._formSubmitButton.removeAttribute('disabled', false);
     }
 
-    _checkInputValidity = (input, inputError) => {
-
-        if (!input.validity.valid) {
-            input.setCustomValidity(input.validity.patternMismatch ? input.dataset.errorMessage : "");
-            inputError.textContent = input.validationMessage;
+    _checkInputValidity () {
+        if (!this._input.validity.valid) {
+            this._input.setCustomValidity(this._input.validity.patternMismatch ? this._input.dataset.errorMessage : "");
+            this._inputError.textContent = this._input.validationMessage;
         } else {
-            inputError.textContent = '';
+            this._inputError.textContent = '';
         }
     }
 
-    enableValidation() {
-        
+    enableValidation() {        
         this._toggleFormButtonState();
-        this._inputs.forEach(input => input.addEventListener('input', () => {
-            this._checkInputValidity(input, this._inputsErrors.get(input));
+        this._input.addEventListener('input', () => {
+            this._checkInputValidity(this._input, this._inputsErrors.get(this._input));
             this._toggleFormButtonState();
-        }));
-
+        });
         this._formElement.addEventListener('reset', () => this._toggleFormButtonState());
     }
 }

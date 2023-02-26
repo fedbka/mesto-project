@@ -4,6 +4,15 @@ export const baseUrl = `https://nomoreparties.co/v1/${cohortId}`;
 
 export const selectorCardsTemplate = '#element__template';
 export const selectorCardsContainer = '.elements';
+export const selectorCardImage = '.element__image';
+export const selectorCardLikeButton = '.element__like-button';
+export const selectorCardElement = '.element';
+export const selectorCardTitle = '.element__title';
+export const selectorCardDeleteButton = '.element__delete-button';
+export const selectorCardLikesCount = '.element__likes-count';
+export const cssClassCardLiked = 'element__like-button_liked';
+export const cssClassCardDeleteButtonHidden = 'element__like-button_hidden';
+
 
 export const selectorPopupWithImage = '.popup_with-image';
 export const selectorPopupWithError = '.popup_show-error';
