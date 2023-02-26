@@ -1,59 +1,72 @@
-
-const cohortId = 'plus-cohort-15';
-const authorizationToken = '1eb95489-35af-40e1-aa20-3c2a6c828418';
-export const config = {
-    baseUrl: `https://nomoreparties.co/v1/${cohortId}`,
-    headers: {
-      authorization: authorizationToken,
-      'Content-Type': 'application/json',
-    }
-}
-
-export const requestData = (request, method = 'GET', body = '') => {
+export default class Api {
     
-    const params = {
-        'method': method,
-        'headers': config.headers,
+    constructor(baseUrl, authorizationToken) {
+
+        this._baseUrl = baseUrl;
+        this._authorizationToken = authorizationToken;
+        this._config = {
+            baseUrl: baseUrl,
+            headers: {
+                authorization: authorizationToken,
+                'Content-Type': 'application/json',
+            }
+        }
+    }
+
+    _requestData = (request, method = 'GET', body = '') => {
+    
+        const params = {
+            'method': method,
+            'headers': this._config.headers,
+        }
+        
+        if (method != 'GET' && body) params.body = JSON.stringify(body);
+    
+        return fetch(`${this._config.baseUrl}/${request}`, params)
+            .then(res => {
+                if (res.ok) return res.json();
+                return Promise.reject(res);
+            });
     }
     
-    if (method != 'GET' && body) params.body = JSON.stringify(body);
+    getInitialCards = () => {
 
-    return fetch(`${config.baseUrl}/${request}`, params)
-        .then(res => {
-            if (res.ok) return res.json();
-            return Promise.reject(res);
-        });
+        return this._requestData('cards');
+    }
+
+    getProfile = () => {
+
+        return this._requestData('users/me');
+    }
+    
+    updateProfile = (name, about) => {
+
+        return this._requestData('users/me', 'PATCH', {name, about});
+    }
+
+    setLike = (cardID) => {
+
+        return this._requestData(`cards/likes/${cardID}`, 'PUT');
+    }
+
+    unsetLike = (cardID) => {
+
+        return this._requestData(`cards/likes/${cardID}`, 'DELETE');
+    }
+
+    removeCard = (cardID) => {
+
+        return this._requestData(`cards/${cardID}`, 'DELETE');
+    }
+
+    addCard = (cardName, cardImageUrl) => {
+
+        return this._requestData(`cards/`, 'POST', {name: cardName, link: cardImageUrl});
+    }
+
+    updateAvatar = (avatarUrl) => {
+        
+        return this._requestData('users/me/avatar', 'PATCH', {avatar: avatarUrl});
+    }
+
 }
-
-export const getInitialCards = () => {
-    return requestData('cards');
-}
-
-export const getProfile = () => {
-    return requestData('users/me');
-}
-
-export const updateProfile = (name, about) => {
-    return requestData('users/me', 'PATCH', {name, about});
-}
-
-export const setLike = (cardID) => {
-    return requestData(`cards/likes/${cardID}`, 'PUT');
-}
-
-export const unsetLike = (cardID) => {
-    return requestData(`cards/likes/${cardID}`, 'DELETE');
-}
-
-export const removeCard = (cardID) => {
-    return requestData(`cards/${cardID}`, 'DELETE');
-}
-
-export const addCard = (cardName, cardImageUrl) => {
-    return requestData(`cards/`, 'POST', {name: cardName, link: cardImageUrl});
-}
-
-export const updateAvatar = (avatarUrl) => {
-    return requestData('users/me/avatar', 'PATCH', {avatar: avatarUrl});
-}
-

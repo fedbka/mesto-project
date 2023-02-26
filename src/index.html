@@ -31,12 +31,12 @@
                 <form class="form" action="submit" id="userProfile" name="userProfile">
                     <h2 class="form__title">Редактировать профиль</h2>
                     <fieldset class="form__fieldset">
-                        <input class="form__item form__item_user-name" type="text" name="username" required
+                        <input class="form__item form__item_user-name" type="text" name="name" required
                             placeholder="Имя" id="username-input" minlength="2" maxlength="40"
                             pattern="^[a-zA-Zа-яА-Я-\s]+$"
                             data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" />
                         <span class="form__input-error username-input-error"></span>
-                        <input class="form__item form__item_user-description" type="text" name="userDescription"
+                        <input class="form__item form__item_user-description" type="text" name="about"
                             required placeholder="О себе" id="userDescription-input" minlength="2" maxlength="200"
                             pattern="^[a-zA-Zа-яА-Я-\s]+$"
                             data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" />
@@ -60,7 +60,7 @@
                             placeholder="Ссылка на картинку" id="elementImageUrl-input" />
                         <span class="form__input-error elementImageUrl-input-error"></span>
                     </fieldset>
-                    <button class="button form__submit-button" type="submit" />Сохранить</button>
+                    <button class="button form__submit-button" type="submit">Сохранить</button>
                 </form>
                 <button class="button popup__close-button" type="button" aria-label="Закрыть форму"></button>
             </div>
@@ -74,7 +74,7 @@
                             placeholder="Ссылка на аватар" id="avatarImageUrl-input" />
                         <span class="form__input-error avatarImageUrl-input-error"></span>
                     </fieldset>
-                    <button class="button form__submit-button" type="submit" />Сохранить</button>
+                    <button class="button form__submit-button" type="submit">Сохранить</button>
                 </form>
                 <button class="button popup__close-button" type="button" aria-label="Закрыть форму"></button>
             </div>
@@ -83,7 +83,7 @@
             <div class="popup__container">
                 <form class="form" action="submit" id="confirm" name="confirm">
                     <h2 class="form__title">Вы уверены?</h2>
-                    <button class="button form__submit-button" type="submit" />Да</button>
+                    <button class="button form__submit-button" type="submit">Да</button>
                 </form>
                 <button class="button popup__close-button" type="button" aria-label="Закрыть форму"></button>
             </div>
@@ -91,9 +91,8 @@
         <div class="popup popup_with-image">
             <div class="popup__image-container">
                 <section class="showroom" aria-label="Полноразмерная картинка">
-                    <img class="showroom__image"
-                        src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg" alt="Архыз">
-                    <h2 class="showroom__caption">Архыз</h2>
+                    <img class="showroom__image" src="" alt="">
+                    <h2 class="showroom__caption"></h2>
                 </section>
                 <button class="button popup__close-button" type="button" aria-label="Закрыть форму"></button>
             </div>
@@ -103,8 +102,8 @@
                 <form class="form" action="submit" id="confirmElementDelete" name="confirmElementDelete    ">
                     <h2 class="form__title form__title_type_error">Возникла ошибка - действие не выполнено!</h2>
                     <p class="popup__error"></p>
-                    <button class="button form__submit-button" type="submit" />Закрыть</button>
                 </form>
+                <button class="button popup__close-button" type="button" aria-label="Закрыть форму"></button>
             </div>
         </div>
     </main>
@@ -122,7 +121,8 @@
                 </div>
 
             </div>
-            <button class="button element__delete-button" type="button" aria-label="Удалить место"></button>
+            <button class="button element__delete-button element__like-button_hidden" type="button"
+                aria-label="Удалить место"></button>
         </article>
     </template>
 </body>
