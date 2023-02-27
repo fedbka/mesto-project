@@ -20,6 +20,7 @@ export default class Card {
     _deleteConfirmHandler;
     _closeDeleteConfirmAction;
     _setConfirmButtonStateHandler;
+
     constructor(data,
         templateSelector,
         imageClickHandler,
@@ -58,51 +59,63 @@ export default class Card {
 
     }
 
+    _likeClickHandler = () => {
+        const updatedCard = this._cardLikeButton.classList.contains(this._cssClassCardLiked)
+        ? this._removeLikeHandler()
+        : this._addLikeHandler();
+
+        updatedCard.then(updatedCardData => {
+            this._cardLikesCount.textContent = updatedCardData.likes.length;
+            this._cardLikeButton.classList.toggle(this._cssClassCardLiked)
+        }).catch((error) => this._showErrorHandler(error));
+
+    }
+
+    _deleteCardHandler = () => {
+        this._deleteConfirmHandler(() => {
+            this._setConfirmButtonStateHandler();
+            this._removeCardHandler(this._cardData._id)
+                .then(() => {
+                    this._element.remove();                        
+                    this._closeDeleteConfirmAction();
+                })
+                .catch((error) => this._showErrorHandler(error))
+        })
+    }
+
+    _setEventListeners = () => {
+        this._cardImage.addEventListener('click', this._imageClickHandler);
+        this._cardLikeButton.addEventListener('click', this._likeClickHandler);
+        this._cardDeleteButton.addEventListener('click', this._deleteCardHandler);        
+    }
+
+
     getElement = () => {
 
         this._element = this._getCardElement();
 
-        const cardImage = this._element.querySelector(this._selectorCardImage);
-        cardImage.setAttribute('src', this._cardData.link);
-        cardImage.setAttribute('alt', this._cardData.name);
-        cardImage.addEventListener('click', this._imageClickHandler);
+        this._cardImage = this._element.querySelector(this._selectorCardImage);
+        this._cardImage.setAttribute('src', this._cardData.link);
+        this._cardImage.setAttribute('alt', this._cardData.name);
 
-        const cardTitle = this._element.querySelector(this._selectorCardTitle);
-        cardTitle.textContent = this._cardData.name;
+        this._cardTitle = this._element.querySelector(this._selectorCardTitle);
+        this._cardTitle.textContent = this._cardData.name;
 
-        const cardLikesCount = this._element.querySelector(this._selectorCardLikesCount);
-        cardLikesCount.textContent = this._cardData.likes.length;
+        this._cardLikesCount = this._element.querySelector(this._selectorCardLikesCount);
+        this._cardLikesCount.textContent = this._cardData.likes.length;
 
-        const cardLikeButton = this._element.querySelector(this._selectorCardLikeButton);
-        cardLikeButton.addEventListener('click', () => {
-            const updatedCard = cardLikeButton.classList.contains(this._cssClassCardLiked)
-                ? this._removeLikeHandler()
-                : this._addLikeHandler();
+        this._cardLikeButton = this._element.querySelector(this._selectorCardLikeButton);
 
-            updatedCard.then(updatedCardData => {
-                cardLikesCount.textContent = updatedCardData.likes.length;
-                cardLikeButton.classList.toggle(this._cssClassCardLiked)
-            }).catch((error) => this._showErrorHandler(error));
+        this._owned = this._checkOwnerHandler(); 
+        this._isLiked = this._checkInUserListHandler(); 
+        
+        this._cardDeleteButton = this._element.querySelector(this._selectorCardDeleteButton);
+        
+        if (this._owned) this._cardDeleteButton.classList.remove(this._cssClassCardDeleteButtonHidden);
 
-        });
+        if (this._isLiked) this._cardLikeButton.classList.add(this._cssClassCardLiked);
 
-        if (this._checkInUserListHandler()) {
-            cardLikeButton.classList.add(this._cssClassCardLiked);
-        }
-
-        if (this._checkOwnerHandler()) {
-            const cardDeleteButton = this._element.querySelector(this._selectorCardDeleteButton);
-            cardDeleteButton.classList.remove(this._cssClassCardDeleteButtonHidden);
-            cardDeleteButton.addEventListener('click', () => this._deleteConfirmHandler(() => {
-                this._setConfirmButtonStateHandler();
-                this._removeCardHandler(this._cardData._id)
-                    .then(() => {
-                        this._element.remove();                        
-                        this._closeDeleteConfirmAction();
-                    })
-                    .catch((error) => this._showErrorHandler(error))
-            }));
-        }
+        this._setEventListeners();
 
         return this._element;
     }

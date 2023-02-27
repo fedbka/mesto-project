@@ -50,11 +50,14 @@ const updateProfileAvatar = (formData) => {
 }
 
 const popupAvatarEdit = new PopupWithForm(selectorPopupAvatarEdit, updateProfileAvatar);
-const formAvatarEditValidator = new FormValidator(validationParams, popupAvatarEdit.getFormElement());
-formAvatarEditValidator.enableValidation();
+const validatorAvatarEdit = new FormValidator(validationParams, popupAvatarEdit.getFormElement());
+validatorAvatarEdit.enableValidation();
 
 const avatarImage = document.querySelector('.profile__avatar');
-avatarImage.addEventListener('click', () => popupAvatarEdit.open());
+avatarImage.addEventListener('click', () => {
+    validatorAvatarEdit.resetValidation();
+    popupAvatarEdit.open()
+});
 
 const updateProfile = (formData) => {
     return api.updateProfile(formData.get('name'), formData.get('about'))
@@ -63,11 +66,14 @@ const updateProfile = (formData) => {
 }
 
 const popupProfileEdit = new PopupWithForm(selectorPopupProfileEdit, updateProfile);
-const formProfileEditValidator = new FormValidator(validationParams, popupProfileEdit.getFormElement());
-formProfileEditValidator.enableValidation();
+const validatorProfileEdit = new FormValidator(validationParams, popupProfileEdit.getFormElement());
+validatorProfileEdit.enableValidation();
 
 const buttonProfileEdit = document.querySelector('.profile__edit-button');
-buttonProfileEdit.addEventListener('click', () => popupProfileEdit.open(userInfo.getUserInfo()));
+buttonProfileEdit.addEventListener('click', () => {
+    validatorProfileEdit.resetValidation();
+    popupProfileEdit.open(userInfo.getUserInfo())
+});
 
 const addCardSubmit = (formData) => {
     return api.addCard(formData.get('elementName'), formData.get('elementImageUrl'))
@@ -76,11 +82,14 @@ const addCardSubmit = (formData) => {
 }
 
 const popupAddCard = new PopupWithForm(selectorPopupAddCard, addCardSubmit);
-const formAddCardValidator = new FormValidator(validationParams, popupAddCard.getFormElement());
-formAddCardValidator.enableValidation();
+const validatorAddCard = new FormValidator(validationParams, popupAddCard.getFormElement());
+validatorAddCard.enableValidation();
 
 const addNewCardButton = document.querySelector('.profile__add-photo-button');
-addNewCardButton.addEventListener('click', () => popupAddCard.open());
+addNewCardButton.addEventListener('click', () => {
+    validatorAddCard.resetValidation();    
+    popupAddCard.open();
+});
 
 const getCardRenderer = (cardData) => {
     const newCard = new Card(cardData,
@@ -94,7 +103,7 @@ const getCardRenderer = (cardData) => {
         (error) => popupWithError.open(error),
         (actionAfterConfirm) => popupWithConfirmation.open(actionAfterConfirm),
         () => popupWithConfirmation.close(),
-        () => popupWithConfirmation.setTextFormSubmitButton('Удаляем...'));
+        () => popupWithConfirmation.renderLoading(true, 'Удаляем...'));
     return newCard;
 }
 

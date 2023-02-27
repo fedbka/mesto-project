@@ -29,44 +29,20 @@ export default class Api {
             });
     }
     
-    getInitialCards = () => {
-
-        return this._requestData('cards');
-    }
-
-    getProfile = () => {
-
-        return this._requestData('users/me');
-    }
+    getInitialCards = () => this._requestData('cards');
     
-    updateProfile = (name, about) => {
+    getProfile = () => this._requestData('users/me');
+    
+    updateProfile = (name, about) => this._requestData('users/me', 'PATCH', {name, about});
 
-        return this._requestData('users/me', 'PATCH', {name, about});
-    }
+    setLike = (cardID) => this._requestData(`cards/likes/${cardID}`, 'PUT');
 
-    setLike = (cardID) => {
+    unsetLike = (cardID) => this._requestData(`cards/likes/${cardID}`, 'DELETE');
 
-        return this._requestData(`cards/likes/${cardID}`, 'PUT');
-    }
+    removeCard = (cardID) => this._requestData(`cards/${cardID}`, 'DELETE');
 
-    unsetLike = (cardID) => {
+    addCard = (cardName, cardImageUrl) => this._requestData(`cards/`, 'POST', {name: cardName, link: cardImageUrl});
 
-        return this._requestData(`cards/likes/${cardID}`, 'DELETE');
-    }
-
-    removeCard = (cardID) => {
-
-        return this._requestData(`cards/${cardID}`, 'DELETE');
-    }
-
-    addCard = (cardName, cardImageUrl) => {
-
-        return this._requestData(`cards/`, 'POST', {name: cardName, link: cardImageUrl});
-    }
-
-    updateAvatar = (avatarUrl) => {
-        
-        return this._requestData('users/me/avatar', 'PATCH', {avatar: avatarUrl});
-    }
+    updateAvatar = (avatarUrl) => this._requestData('users/me/avatar', 'PATCH', {avatar: avatarUrl});
 
 }

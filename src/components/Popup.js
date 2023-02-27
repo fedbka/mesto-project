@@ -3,16 +3,11 @@ export default class Popup {
     _cssClassShowPopup = 'popup_opened';
     _cssClassPopup = 'popup';
     _cssClassPopupCloseButton = 'popup__close-button';
-    _selectorFormSubmitButton = '.form__submit-button';
-    _buttonFormSubmit;
-    _textFormSubmitButton = '';
 
     constructor(selectorPopup) {
 
         this._selectorPopup = selectorPopup;
         this._elementPopup = document.querySelector(this._selectorPopup);
-        this._buttonFormSubmit = this._elementPopup.querySelector(this._selectorFormSubmitButton);
-        this._textFormSubmitButton = !!this._buttonFormSubmit ? this._buttonFormSubmit.textContent : '';
     }
 
     _handleEscClose = (evt) => {
@@ -29,7 +24,6 @@ export default class Popup {
     }
 
     open() {
-
         this.setEventListeners();
         this._elementPopup.classList.add(this._cssClassShowPopup);        
     }
@@ -38,25 +32,14 @@ export default class Popup {
 
         this.removeEventListeners();
         this._elementPopup.classList.remove(this._cssClassShowPopup);
-        this.setTextFormSubmitButton(this._textFormSubmitButton);
-    }
-
-    setTextFormSubmitButton(caption = 'Сохраняем...') {
-
-        if (!!this._textFormSubmitButton) {
-            this._buttonFormSubmit.textContent = caption;
-        }
     }
 
     setEventListeners() {
-
-        this._elementPopup.addEventListener('submit', (evt) => evt.preventDefault());
         this._elementPopup.addEventListener('mousedown', this._handleClickClose);
         document.addEventListener('keydown', this._handleEscClose);        
     }
 
     removeEventListeners() {
-
         this._elementPopup.removeEventListener('mousedown', this._handleClickClose);
         document.removeEventListener('keydown', this._handleEscClose);
     }
