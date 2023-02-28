@@ -1,6 +1,6 @@
 export default class FormValidator {
 
-    _cssFormItemWithError = 'form__item-invalid';
+    _cssFormItemWithError = 'form__item_invalid';
 
     constructor({ selectorInput, selectorInputError, selectorSubmitButton }, formElement) {
 

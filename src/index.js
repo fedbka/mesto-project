@@ -53,8 +53,8 @@ const popupAvatarEdit = new PopupWithForm(selectorPopupAvatarEdit, updateProfile
 const validatorAvatarEdit = new FormValidator(validationParams, popupAvatarEdit.getFormElement());
 validatorAvatarEdit.enableValidation();
 
-const avatarImage = document.querySelector('.profile__avatar');
-avatarImage.addEventListener('click', () => {
+const avatarImageButton = document.querySelector('.profile__avatar-button');
+avatarImageButton.addEventListener('click', () => {
     validatorAvatarEdit.resetValidation();
     popupAvatarEdit.open()
 });

@@ -39,7 +39,7 @@
 @import url("./blocks/form/__title/form__title.css");
 @import url("./blocks/form/__title/_type/form__title_type_error.css");
 @import url("./blocks/form/__item/form__item.css");
-@import url("./blocks/form/__item/_invalid/form__item-invalid.css");
+@import url("./blocks/form/__item/_invalid/form__item_invalid.css");
 @import url("./blocks/form/__input-error/form__input-error.css");
 @import url("./blocks/form/__submit-button/form__submit-button.css");
 @import url("./blocks/showroom/showroom.css");
