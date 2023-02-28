@@ -23,7 +23,3 @@
 .form__item:focus {
   outline: solid 2px rgba(0, 0, 255);
 }
-
-.form__item:invalid {
-  border-bottom: 2px solid red;  
-}

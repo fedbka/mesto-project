@@ -1,40 +1,125 @@
 import './index.css';
-import * as api from './components/api';
-import * as validation from './components/validate';
-import * as cards from './components/cards';
-import * as modal from './components/modal';
-import * as profile from './components/profile';
+import {
+    authorizationToken,
+    baseUrl,
+    selectorCardsTemplate,
+    selectorCardsContainer,
+    selectorPopupWithImage,
+    selectorPopupWithError,
+    selectorPopupWithConfirmation,
+    selectorPopupAvatarEdit,
+    selectorPopupProfileEdit,
+    selectorPopupAddCard,
+    selectorProfileUsername,
+    selectorProfileDescription,
+    selectorProfileAvatar,
+    selectorInput,
+    selectorInputError,
+    selectorSubmitButton,
+} from './utils/constants';
 
-Promise.all([api.getProfile(), api.getInitialCards()])
-    .then(([profileData, cardsData]) => {
-        profile.setProfile(profileData);
-        profile.renderProfile();
-        cardsData.forEach(card => cards.cards.push(card));
-        cards.renderCards();        
-    })
-    .catch(error => modal.showErrorPopup(error));
+import Api from './components/Api';
+import Card from './components/Card';
+import Section from './components/Section';
+import PopupWithImage from './components/PopupWithImage';
+import PopupWithError from './components/PopupWinthError';
+import PopupWithConfirmation from './components/PopupWithConfirmation';
+import PopupWithForm from './components/PopupWithForm';
+import UserInfo from './components/UserInfo';
+import FormValidator from './components/FormValidator';
 
-const validationParametrs = {
-    formSelector: '.form',
-    inputSelector: '.form__item',
-    inputErrorSelector: 'form__input-error',
-    submitButtonSelector: '.form__submit-button',
+const validationParams = {
+    selectorInput,
+    selectorInputError,
+    selectorSubmitButton,
+};
+
+const cards = [];
+
+const api = new Api(baseUrl, authorizationToken);
+const userInfo = new UserInfo({ selectorProfileUsername, selectorProfileDescription, selectorProfileAvatar });
+
+const popupWithImage = new PopupWithImage(selectorPopupWithImage);
+const popupWithError = new PopupWithError(selectorPopupWithError);
+const popupWithConfirmation = new PopupWithConfirmation(selectorPopupWithConfirmation);
+
+const updateProfileAvatar = (formData) => {
+    return api.updateAvatar(formData.get('avatarImageUrl'))
+        .then(userData => userInfo.setUserInfo(userData))
+        .catch(error => popupWithError.open(error));
 }
 
-validation.enableValidation(validationParametrs);
+const popupAvatarEdit = new PopupWithForm(selectorPopupAvatarEdit, updateProfileAvatar);
+const validatorAvatarEdit = new FormValidator(validationParams, popupAvatarEdit.getFormElement());
+validatorAvatarEdit.enableValidation();
 
-const editProfileButton = document.querySelector('.profile__edit-button');
-editProfileButton.addEventListener('click', modal.openProfileEditPopup);
+const avatarImageButton = document.querySelector('.profile__avatar-button');
+avatarImageButton.addEventListener('click', () => {
+    validatorAvatarEdit.resetValidation();
+    popupAvatarEdit.open()
+});
+
+const updateProfile = (formData) => {
+    return api.updateProfile(formData.get('name'), formData.get('about'))
+        .then(userData => userInfo.setUserInfo(userData))
+        .catch(error => popupWithError.open(error));
+}
+
+const popupProfileEdit = new PopupWithForm(selectorPopupProfileEdit, updateProfile);
+const validatorProfileEdit = new FormValidator(validationParams, popupProfileEdit.getFormElement());
+validatorProfileEdit.enableValidation();
+
+const buttonProfileEdit = document.querySelector('.profile__edit-button');
+buttonProfileEdit.addEventListener('click', () => {
+    validatorProfileEdit.resetValidation();
+    popupProfileEdit.open(userInfo.getUserInfo())
+});
+
+const addCardSubmit = (formData) => {
+    return api.addCard(formData.get('elementName'), formData.get('elementImageUrl'))
+        .then(cardData => sectionCards.renderItem(cardData, false))
+        .catch(error => popupWithError.open(error));
+}
+
+const popupAddCard = new PopupWithForm(selectorPopupAddCard, addCardSubmit);
+const validatorAddCard = new FormValidator(validationParams, popupAddCard.getFormElement());
+validatorAddCard.enableValidation();
 
 const addNewCardButton = document.querySelector('.profile__add-photo-button');
-addNewCardButton.addEventListener('click', modal.openAddNewCardPopup);
+addNewCardButton.addEventListener('click', () => {
+    validatorAddCard.resetValidation();    
+    popupAddCard.open();
+});
 
-const avatarImage = document.querySelector('.profile__avatar');
-avatarImage.addEventListener('click', modal.openUpdateAvatarPopup);
+const getCardRenderer = (cardData) => {
+    const newCard = new Card(cardData,
+        selectorCardsTemplate,
+        () => popupWithImage.open(cardData.link, cardData.name),
+        () => userInfo.checkInUserList(cardData.likes),
+        () => userInfo.usersEqual(cardData.owner),
+        () => api.setLike(cardData._id),
+        () => api.unsetLike(cardData._id),
+        api.removeCard,
+        (error) => popupWithError.open(error),
+        (actionAfterConfirm) => popupWithConfirmation.open(actionAfterConfirm),
+        () => popupWithConfirmation.close(),
+        () => popupWithConfirmation.renderLoading(true, 'Удаляем...'));
+    return newCard;
+}
 
-const popups = [...document.querySelectorAll('.popup')];
-popups.forEach(popup => popup.addEventListener('mousedown', (evt) => {
-    if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close-button')) {
-        modal.closePopup(popup);
-    }
-}));
+const sectionCards = new Section({
+    items: cards,
+    renderer: (cardData) => {
+        const item = getCardRenderer(cardData);
+        const itemElement = item.getElement();
+        return itemElement;
+    },
+}, selectorCardsContainer);
+
+Promise.all([api.getProfile(), api.getInitialCards()])
+    .then(([userData, cardsData]) => {
+        userInfo.setUserInfo(userData);
+        sectionCards.updateItems(cardsData);
+        sectionCards.renderItems();
+    })
+    .catch(error => popupWithError.open(error));
