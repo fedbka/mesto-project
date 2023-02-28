@@ -1,5 +1,7 @@
 export default class FormValidator {
 
+    _cssFormItemWithError = 'form__item-invalid';
+
     constructor({ selectorInput, selectorInputError, selectorSubmitButton }, formElement) {
 
         this._formElement = formElement;
@@ -15,7 +17,10 @@ export default class FormValidator {
     resetValidation = () => {
 
         this._toggleFormButtonState();
-        this._inputsErrors.forEach((inputError, input) => inputError.textContent = '');
+        this._inputsErrors.forEach((inputError, input) => {
+            inputError.textContent = '';
+            input.classList.remove(this._cssFormItemWithError);
+        });
 
     }
 
@@ -30,8 +35,10 @@ export default class FormValidator {
 
         if (!input.validity.valid) {
             input.setCustomValidity(input.validity.patternMismatch ? input.dataset.errorMessage : "");
+            input.classList.add(this._cssFormItemWithError);
             inputError.textContent = input.validationMessage;
         } else {
+            input.classList.remove(this._cssFormItemWithError);
             inputError.textContent = '';
         }
     }

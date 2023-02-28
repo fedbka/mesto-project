@@ -15,17 +15,17 @@ export default class PopupWithForm extends Popup {
 
     }
 
-    _handleSubmitPreventDefault = (evt) => evt.preventDefault();
-
     _getSubmitHandler(submitHandler) {
 
-        return () => {
+        return (evt) => {
+            evt.preventDefault();
             this.renderLoading(true);
             submitHandler(this._getInputValues())
                 .then(() => this.close())
                 .finally(() => this.renderLoading(false));
         }
     }
+
     _getInputValues() {
 
         const { elements } = this._form;
@@ -72,31 +72,22 @@ export default class PopupWithForm extends Popup {
     setEventListeners() {
 
         super.setEventListeners();
-        this._form.addEventListener('submit', this._handleSubmitPreventDefault);
         this._form.addEventListener('submit', this._submitHandler);
     }
 
     removeEventListeners() {
 
-        this._form.removeEventListener('submit', this._handleSubmitPreventDefault);
         this._form.removeEventListener('submit', this._submitHandler);
         super.removeEventListeners();
     }
 
-    _handleSubmitPreventDefault = (evt) => evt.preventDefault();
-
     open(inputValues) {
-        this.renderLoading(false);
         if (!!inputValues) this._setInputValues(inputValues);
         super.open();
     }
 
-    reset() {
-        this._form.reset();
-    }
-
     close() {
-
+        this._form.reset();
         super.close();
     }
 }

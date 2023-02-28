@@ -1,15 +1,15 @@
 .profile__avatar {
-  margin: 0;
-  padding: 0;
-  border-radius: 50%;
-  height: 120px;
-  width: 120px;
-  max-width: 120px;
-  justify-self: self-start;
-  object-fit: cover;
-  cursor: pointer;
-  position: relative;
   background: black;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 120px;
+  justify-self: self-start;
+  margin: 0;
+  max-width: 120px;
+  object-fit: cover;
+  padding: 0;
+  position: relative;
+  width: 120px;
 }
 
 .profile__avatar:hover {
